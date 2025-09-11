@@ -1,2 +1,21 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* Remove arrows in Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.glow-focus:focus {
+  outline: none;
+  border-color: #5799e4;
+  box-shadow: 
+    /* 0 0 0 1px #10b981, */ 0 0 10px rgba(32, 121, 229, 0.3);
+}
