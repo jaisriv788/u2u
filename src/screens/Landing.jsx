@@ -1,5 +1,11 @@
+import { Link } from "react-router";
+
 function Landing() {
-  return <div>Landing</div>;
+  return (
+    <div>
+      <Link to="/signin">Go To Signin</Link>
+    </div>
+  );
 }
 
 export default Landing;

@@ -1,15 +1,37 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useConstStore from "../store/constStore";
+import useUserStore from "../store/userStore";
+import axios from "axios";
 
 function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { baseUrl } = useConstStore();
+  const { setUser, setIsConnected } = useUserStore();
+
+  const navigate = useNavigate();
+
   async function handleSubmit(e) {
-    e.preventDefault(); // Prevents page reload
-    console.log("Username:", username);
-    console.log("Password:", password);
-    alert(`Submitted: ${username}, ${password}`);
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${baseUrl}login`, {
+        username: username,
+        password: password,
+      });
+
+      if (response.data.status == 200) {
+        alert(response.data.msg);
+        setUser(response.data.user);
+        setIsConnected(true);
+        navigate("/dashboard");
+      } else if (response.data.status == 201) {
+        alert(response.data.msg);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -27,6 +49,7 @@ function Signin() {
             type="text"
             placeholder="Username"
             value={username}
+            required
             onChange={(e) => setUsername(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
@@ -34,6 +57,7 @@ function Signin() {
             type="password"
             placeholder="Password"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
@@ -45,8 +69,12 @@ function Signin() {
           </button>
         </form>
         <div className="mt-5 text-sm text-purple-800">
-          <Link to="/" className="cursor-pointer">Forgot Password?</Link>{" "}
-          <Link to="/signup" className="cursor-pointer">SignUp</Link>
+          <Link to="/" className="cursor-pointer">
+            Forgot Password?
+          </Link>{" "}
+          <Link to="/signup" className="cursor-pointer">
+            SignUp
+          </Link>
         </div>
       </div>
     </div>

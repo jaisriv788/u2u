@@ -1,25 +1,91 @@
-import { useState } from "react";
-import { Link } from "react-router";
-import { countries } from "../data/country";
-
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import axios from "axios";
+import useConstStore from "../store/constStore";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 function Signup() {
   const [referralId, setReferralId] = useState("");
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [country, setCountry] = useState("");
+  const [countries, setCountries] = useState(null);
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const { baseUrl } = useConstStore();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchCountries() {
+      try {
+        const response = await axios.post(`${baseUrl}country`, null, {
+          signal: controller.signal,
+        });
+        setCountries(response.data.data);
+      } catch (error) {
+        if (error.name === "CanceledError" || error.name === "AbortError") {
+          console.log("Request aborted");
+        } else {
+          console.error("Error fetching countries:", error);
+        }
+      }
+    }
+
+    fetchCountries();
+
+    return () => {
+      console.log("Component unmounted — canceling request");
+      controller.abort();
+    };
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(countries);
-    alert(
-      `Submitted: ${referralId},${username},${fullName},${country},${number},${email},${password},${passwordConfirm}`
-    );
+    setLoading(true);
+    if (password !== passwordConfirm) {
+      alert("Password Do Not Match.");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password Length Must Be 6.");
+      setLoading(false);
+      return;
+    }
+
+    const response = await axios.post(`${baseUrl}register`, {
+      first_name: fullName,
+      sponsor_id: referralId,
+      username,
+      country,
+      phone_no: number,
+      email: email,
+      password,
+      password_confirmation: passwordConfirm,
+      agree_terms: checked,
+    });
+
+    if (response.data.status == 200) {
+      alert(response.data.msg);
+      navigate("/signin");
+    } else if (response.data.status == 201) {
+      alert(response.data.msg);
+    } else {
+      alert("Registration Failed!");
+    }
+    setLoading(false);
   }
+
   return (
     <div className="bg-black min-h-screen flex justify-center items-center">
       <div className="bg-white text-black px-5 py-4 rounded-lg max-w-120">
@@ -35,12 +101,14 @@ function Signup() {
             type="text"
             placeholder="Referral Id"
             value={referralId}
+            required
             onChange={(e) => setReferralId(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
           <input
             type="text"
             placeholder="Username"
+            required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
@@ -48,18 +116,20 @@ function Signup() {
           <input
             type="text"
             placeholder="FullName"
+            required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
           <select
+            required
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           >
             <option value="">Select country</option>
-            {countries.map((item, index) => (
-              <option key={index} value={item.name}>
+            {countries?.map((item, index) => (
+              <option key={index} value={item.id}>
                 {item.name}
               </option>
             ))}
@@ -67,48 +137,93 @@ function Signup() {
           <input
             type="number"
             placeholder="Mobile Number"
+            required
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
           <input
-            type="text"
+            type="email"
             placeholder="Email Address"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
-          />
+
+          <div className="relative w-full">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border border-gray-300 py-2 px-3 pr-10 rounded w-full glow-focus"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute bg-purple-800  h-full right-0 top-1/2 rounded flex items-center justify-center transform -translate-y-1/2 w-12 text-white hover:text-gray-200 cursor-pointer focus:outline-none"
+              tabIndex={-1} // Prevents button from being accidentally focused
+            >
+              {showPassword ? (
+                <AiOutlineEyeInvisible size={20} />
+              ) : (
+                <AiOutlineEye size={20} />
+              )}
+            </button>
+          </div>
+
+          <div className="relative w-full">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              required
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              className="border border-gray-300 py-2 px-3 pr-10 rounded w-full glow-focus"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute bg-purple-800  h-full right-0 top-1/2 rounded flex items-center justify-center transform -translate-y-1/2 w-12 text-white hover:text-gray-200 cursor-pointer focus:outline-none"
+              tabIndex={-1}
+            >
+              {showConfirmPassword ? (
+                <AiOutlineEyeInvisible size={20} />
+              ) : (
+                <AiOutlineEye size={20} />
+              )}
+            </button>
+          </div>
+
           <div className=" flex items-center gap-2">
             <input
+              required
+              id="terms"
               type="checkbox"
               onChange={() => setChecked((prev) => !prev)}
               checked={checked}
               className="checkbox checkbox-sm checkbox-info"
             />
-            <span className="text-sm">
+            <label htmlFor="terms" className="text-sm">
               I agree with the website's{" "}
               <Link className="text-purple-800">Terms and conditions</Link>
-            </span>
+            </label>
           </div>
           <button
             type="submit"
-            className="text-white bg-[#38C66C] font-semibold py-2 rounded cursor-pointer border border-black hover:border-amber-400 transition ease-in-out duration-300"
+            disabled={loading}
+            className="relative overflow-hidden disabled:cursor-not-allowed text-white bg-[#38C66C] font-semibold py-2 rounded cursor-pointer border border-black hover:border-amber-400 transition ease-in-out duration-300"
           >
             REGISTER NOW
+            {loading && (
+              <div className="absolute bg-[#38C66C] backdrop-blur-xl inset-0 flex items-center justify-center">
+                <span className="loading loading-spinner loading-md"></span>
+              </div>
+            )}
           </button>
         </form>
         <div className="mt-5 text-sm text-purple-800">

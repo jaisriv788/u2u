@@ -7,6 +7,8 @@ const useUserStore = create(
       (set) => ({
         user: null,
         setUser: (user) => set({ user }),
+        isConnected: false,
+        setIsConnected: (isConnected) => set({isConnected}),
       }),
       {
         name: "user-storage",
