@@ -6,7 +6,7 @@ function ProtectedRoute() {
   const { isConnected } = useUserStore();
 
   return isConnected ? (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <Navbar />
       <Outlet />
     </div>
