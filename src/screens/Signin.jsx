@@ -9,7 +9,7 @@ function Signin() {
   const [password, setPassword] = useState("");
 
   const { baseUrl } = useConstStore();
-  const { setUser, setIsConnected } = useUserStore();
+  const { setUser, setIsConnected, setToken } = useUserStore();
 
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ function Signin() {
         alert(response.data.msg);
         setUser(response.data.user);
         setIsConnected(true);
+        setToken(response.data.token);
         navigate("/dashboard");
       } else if (response.data.status == 201) {
         alert(response.data.msg);

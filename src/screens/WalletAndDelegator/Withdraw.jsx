@@ -2,7 +2,7 @@ import React from 'react'
 
 function Withdraw() {
   return (
-    <div>Withdraw</div>
+    <div className="bg-red-400 flex-1">Withdraw</div>
   )
 }
 

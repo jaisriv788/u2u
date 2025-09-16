@@ -1,7 +1,7 @@
 import React from "react";
 
 function Delegate() {
-  return <div>Delegate</div>;
+  return <div className="bg-red-400 flex-1">Delegate</div>;
 }
 
 export default Delegate;

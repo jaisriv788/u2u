@@ -2,7 +2,7 @@ import React from 'react'
 
 function DirectBonus() {
   return (
-    <div>DirectBonus</div>
+    <div className="bg-red-400 flex-1">DirectBonus</div>
   )
 }
 

@@ -1,5 +1,5 @@
 function RankVolume() {
-  return <div>RankVolume</div>;
+  return <div className="bg-red-400 flex-1">RankVolume</div>;
 }
 
 export default RankVolume;

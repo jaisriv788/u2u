@@ -12,7 +12,11 @@ function Navbar() {
   return (
     <div className="h-15 flex items-center justify-between px-6">
       <div className="flex items-center sm:gap-8 md:gap-15">
-        <img src={logoImgSrc} alt="icon" className="h-12 cursor-pointer hidden sm:flex" />
+        <img
+          src={logoImgSrc}
+          alt="icon"
+          className="h-12 cursor-pointer hidden sm:flex"
+        />
         <div
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="bg-gradient-to-r cursor-pointer from-[#01CAFF] to-[#91FE9D] w-8 h-8 rounded flex items-center justify-center text-white text-xl"

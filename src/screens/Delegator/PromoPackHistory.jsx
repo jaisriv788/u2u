@@ -2,7 +2,7 @@ import React from 'react'
 
 function PromoPackHistory() {
   return (
-    <div>PromoPackHistory</div>
+    <div className="bg-red-400 flex-1">PromoPackHistory</div>
   )
 }
 

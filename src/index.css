@@ -23,3 +23,21 @@ input[type="number"] {
   border-color: #5799e4;
   box-shadow: 0 0 10px rgba(32, 121, 229, 0.3);
 }
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+}
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

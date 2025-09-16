@@ -8,11 +8,13 @@ const useUserStore = create(
         user: null,
         setUser: (user) => set({ user }),
         isConnected: false,
-        setIsConnected: (isConnected) => set({isConnected}),
+        setIsConnected: (isConnected) => set({ isConnected }),
+        token: null,
+        setToken: (token) => set({ token }),
       }),
       {
         name: "user-storage",
-        getStorage: () => localStorage,
+        getStorage: () => sessionStorage,
       }
     ),
     { name: "UserStore" }
