@@ -1,6 +1,6 @@
 //normal imports
 import { Route, Routes } from "react-router";
-
+import useConstStore from "./store/constStore";
 //----------------------------------------------------------------------
 
 //screens imports
@@ -43,12 +43,16 @@ import WithdrawReport from "./screens/WalletAndDelegator/WithdrawReport";
 //Component imports
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import PublicRoute from "./components/common/PublicRoute";
+import Loader from "./components/common/Loader";
 
 //----------------------------------------------------------------------
 
 function App() {
+  const { screenLoading } = useConstStore();
+
   return (
     <>
+      {screenLoading && <Loader />}
       <Routes>
         {/*public route*/}
         <Route element={<PublicRoute />}>

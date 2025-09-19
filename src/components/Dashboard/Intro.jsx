@@ -9,7 +9,7 @@ function Intro() {
           WELCOME <span className="text-[#1DCD1D]">U2U DELEGATOR REWARD</span>{" "}
           PROGRAM
         </div>
-        <div className="text-sm">User ID: {user.username}</div>
+        <div className="text-sm">User ID: {user?.username}</div>
       </div>
       <div className="text-sm self-end hidden sm:flex">Dashboard</div>
     </div>

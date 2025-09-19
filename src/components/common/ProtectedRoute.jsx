@@ -11,19 +11,17 @@ function ProtectedRoute() {
 
   useEffect(() => {
     const screenWidth = window.innerWidth;
-    if (screenWidth >= 1024) {
-      setIsSidebarOpen(true);
-    } else {
-      setIsSidebarOpen(false);
-    }
-  }, []);
+    setIsSidebarOpen(screenWidth >= 1024);
+  }, [setIsSidebarOpen]);
 
   return isConnected ? (
-    <div className="flex flex-col min-h-screen bg-black text-white">
+    <div className="flex flex-col h-screen bg-black text-white">
       <Navbar />
-      <div className="flex-1 flex relative">
+      <div className="flex flex-1 overflow-hidden relative">
         {isSidebarOpen && <SideBar />}
-        <Outlet />
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <Outlet />
+        </div>
       </div>
     </div>
   ) : (

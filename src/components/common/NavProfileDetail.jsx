@@ -3,10 +3,38 @@ import { GiBanknote } from "react-icons/gi";
 import { VscSignOut } from "react-icons/vsc";
 import useUserStore from "../../store/userStore";
 import useDashboardStore from "../../store/dashboardStore";
+import axios from "axios";
+import { useEffect } from "react";
+import useConstStore from "../../store/constStore";
 
 function NavProfileDetail() {
-  const { user, setUser, setIsConnected } = useUserStore();
+  const { user, setUser, setIsConnected, token } = useUserStore();
   const { dashboardData, setDashBoardData } = useDashboardStore();
+  const { baseUrl } = useConstStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(`${baseUrl}packages_list`);
+        console.log(token);
+        const response = await axios.post(
+          `${baseUrl}packages_list`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="absolute z-50 bg-[#1F2C24] rounded right-6 top-13 sm:min-w-90 p-1 text-xs sm:text-sm">
@@ -25,7 +53,7 @@ function NavProfileDetail() {
         <div className="text-xs font-semibold ">
           <div>
             Delegator Amount ${dashboardData.total_investment} / [Rank: U2
-            SILVER]
+            SILVERrrrrrrrrr]
           </div>
         </div>
       </div>
