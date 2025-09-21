@@ -3,23 +3,26 @@ import Footer from "../../components/common/FooterTwo";
 import useUserStore from "../../store/userStore";
 import useConstStore from "../../store/constStore";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
-function LevelVolume() {
+function DirectTeamDetails() {
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
 
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+
+  const location = useLocation();
+  const { item } = location.state;
 
   useEffect(() => {
+   //  console.log({ item });
     const fetchUserData = async () => {
       setScreenLoading(true);
       if (user && isConnected) {
         try {
           const { data: resp } = await axios.post(
             `${baseUrl}level_network`,
-            { user_id: user?.id },
+            { user_id: item?.id },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -45,25 +48,24 @@ function LevelVolume() {
   return (
     <div className="flex-1 p-4 flex flex-col overflow-x-hidden">
       <div className="flex justify-between items-center">
-        <div className="text-lg font-semibold">Level Network</div>
+        <div className="text-lg font-semibold">Direct Team Details</div>
         <div className="text-xs">
           <span className="text-green-300">Network</span> {">>"} Level Network
         </div>
       </div>
       <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
         <div className="font-semibold border-b border-gray-500 pb-3 ">
-          Level Network
+          {item.first_name}[{item.username}]
         </div>
 
         <div className="overflow-x-auto mt-4 w-full max-w-full">
           <table className="table w-full text-xs ">
             <thead>
               <tr>
-                <th className="text-center"> Level</th>
+                <th className="text-center">Level</th>
                 <th className="text-center">Total User</th>
                 <th className="text-center">Active User</th>
-                <th className="text-center">Enroll amount</th>
-                <th className="text-center">Active Enroll amount</th>
+                <th className="text-center">Inactive User</th>
               </tr>
             </thead>
             <tbody>
@@ -81,16 +83,13 @@ function LevelVolume() {
                     </td>
                     <td className="text-center">{item.total_user}</td>
                     <td
-                      className="text-center text-green-400 cursor-pointer"
-                      onClick={() =>
-                        navigate("/activeuserdetails", { state: { item } })
-                      }
+                      className="text-center"
+                      onClick={() => console.log("New Page")}
                     >
                       {item.active_user}
                     </td>
-                    <td className="text-center">${item.enroll_amount}</td>
                     <td className="text-center">
-                      ${item.active_enroll_amount}
+                      {item.total_user - item.active_user}
                     </td>
                   </tr>
                 ))
@@ -104,4 +103,4 @@ function LevelVolume() {
   );
 }
 
-export default LevelVolume;
+export default DirectTeamDetails;

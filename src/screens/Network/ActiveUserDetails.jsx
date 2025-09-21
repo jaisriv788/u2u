@@ -3,23 +3,27 @@ import Footer from "../../components/common/FooterTwo";
 import useUserStore from "../../store/userStore";
 import useConstStore from "../../store/constStore";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-function LevelVolume() {
+function ActiveUserDetails() {
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
 
   const [data, setData] = useState([]);
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const { item } = location.state;
 
   useEffect(() => {
+    console.log({ item });
     const fetchUserData = async () => {
       setScreenLoading(true);
       if (user && isConnected) {
         try {
           const { data: resp } = await axios.post(
-            `${baseUrl}level_network`,
-            { user_id: user?.id },
+            `${baseUrl}levelNetworkView`,
+            { user_id: user?.id, level: item.level },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -27,9 +31,7 @@ function LevelVolume() {
               },
             }
           );
-
-          // console.log(resp.data);
-
+        //   console.log(resp.data);
           if (resp.status === 200) {
             setData(resp.data);
           }
@@ -59,38 +61,34 @@ function LevelVolume() {
           <table className="table w-full text-xs ">
             <thead>
               <tr>
-                <th className="text-center"> Level</th>
-                <th className="text-center">Total User</th>
-                <th className="text-center">Active User</th>
-                <th className="text-center">Enroll amount</th>
-                <th className="text-center">Active Enroll amount</th>
+                <th className="text-center">S.no</th>
+                <th className="text-center">Level</th>
+                <th className="text-center">Username</th>
+                <th className="text-center">Lend Amount</th>
+                <th className="text-center">Roi Received</th>
               </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center">
+                  <td colSpan={5} className="text-center">
                     No Data Found
                   </td>
                 </tr>
               ) : (
                 data.map((item, index) => (
                   <tr key={index}>
-                    <td className="text-nowrap text-center">
-                      Level {item.level}
-                    </td>
-                    <td className="text-center">{item.total_user}</td>
+                    <td className="text-nowrap text-center">{index + 1}</td>
+                    <td className="text-nowrap text-center">{item.level}</td>
+                    <td className="text-center">{item.username}</td>
+                    <td className="text-center">${item.lend_amount}</td>
                     <td
-                      className="text-center text-green-400 cursor-pointer"
                       onClick={() =>
-                        navigate("/activeuserdetails", { state: { item } })
+                        navigate("/amountdetail", { state: { item } })
                       }
+                      className="text-center text-green-400 cursor-pointer"
                     >
-                      {item.active_user}
-                    </td>
-                    <td className="text-center">${item.enroll_amount}</td>
-                    <td className="text-center">
-                      ${item.active_enroll_amount}
+                      ${item.roi_received.toFixed(2)}
                     </td>
                   </tr>
                 ))
@@ -104,4 +102,4 @@ function LevelVolume() {
   );
 }
 
-export default LevelVolume;
+export default ActiveUserDetails;

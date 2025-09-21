@@ -19,6 +19,10 @@ import MyDirect from "./screens/Network/MyDirect";
 import TeamNetwork from "./screens/Network/TeamNetwork";
 import LevelVolume from "./screens/Network/LevelVolume";
 import RankVolume from "./screens/Network/RankVolume";
+import DirectTeamDetails from "./screens/Network/DirectTeamDetails";
+import MyDirectTeam from "./screens/Network/MyDirectTeam";
+import ActiveUserDetails from "./screens/Network/ActiveUserDetails";
+import AmountDetail from "./screens/Network/AmountDetail";
 
 //income screens
 import DailyDelegatorReward from "./screens/Income/DailyDelegatorReward";
@@ -74,6 +78,10 @@ function App() {
           <Route path="/teamnetwork" element={<TeamNetwork />} />
           <Route path="/levelvolume" element={<LevelVolume />} />
           <Route path="/rankvolume" element={<RankVolume />} />
+          <Route path="/directteamdetails" element={<DirectTeamDetails />} />
+          <Route path="/mydirectteam" element={<MyDirectTeam />} />
+          <Route path="/activeuserdetails" element={<ActiveUserDetails />} />
+          <Route path="/amountdetail" element={<AmountDetail />} />
 
           {/*income route*/}
           <Route

@@ -19,7 +19,7 @@ function ProtectedRoute() {
       <Navbar />
       <div className="flex flex-1 overflow-hidden relative">
         {isSidebarOpen && <SideBar />}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex-1 flex overflow-y-auto overflow-x-hidden">
           <Outlet />
         </div>
       </div>

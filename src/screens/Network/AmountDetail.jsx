@@ -3,31 +3,36 @@ import useUserStore from "../../store/userStore";
 import useConstStore from "../../store/constStore";
 import axios from "axios";
 import Footer from "../../components/common/FooterTwo";
-import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
-function MyDirect() {
+function AmountDetail() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
-  const [expandedIndex, setExpandedIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
 
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { item } = location.state;
 
   useEffect(() => {
+    console.log({ itemHere: item });
     setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {
         try {
           const response = await axios.post(
-            `${baseUrl}my_direct`,
-            { user_id: user?.id },
+            `${baseUrl}levelNetworkViewDepth`,
+            {
+              user_id: user?.id,
+              from_id: item.from_id,
+              level: Number(item.level),
+            },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -35,7 +40,7 @@ function MyDirect() {
               },
             }
           );
-          // console.log(response.data.data);
+          console.log(response.data.data);
           if (response.data.status === 200) {
             setData(response.data.data);
             setFilteredData(response.data.data);
@@ -67,10 +72,6 @@ function MyDirect() {
     setFilteredData(filtered);
     setCurrentPage(1);
   }, [searchValue, data]);
-
-  const toggleExpand = (index) => {
-    setExpandedIndex((prev) => (prev === index ? null : index));
-  };
 
   const handleChangeRows = (e) => {
     setRowsPerPage(Number(e.target.value));
@@ -199,12 +200,12 @@ function MyDirect() {
           <table className="table w-full text-xs">
             <thead>
               <tr>
-                <th>#</th>
-                <th>User ID</th>
-                <th>Name</th>
-                <th>Mobile</th>
-                <th>Email</th>
-                <th>View Team</th>
+                <th className="text-center">S.no</th>
+                <th className="text-center">From User</th>
+                <th className="text-center">Level</th>
+                <th className="text-center">Roi Amount</th>
+                <th className="text-center">Level Income Recieved</th>
+                <th className="text-center">Timestamp</th>
               </tr>
             </thead>
             <tbody>
@@ -216,77 +217,30 @@ function MyDirect() {
                 </tr>
               ) : (
                 currentRows.map((item, index) => (
-                  <React.Fragment key={startIdx + index}>
-                    <tr
-                      className={
-                        (index + startIdx) % 2 === 0
-                          ? "bg-[#303C34]"
-                          : "bg-[#1F2C24]"
-                      }
-                    >
-                      <td className="flex gap-2 items-center">
-                        <button
-                          onClick={() => toggleExpand(startIdx + index)}
-                          className={`w-5 h-5 cursor-pointer flex items-center justify-center rounded-full text-white font-semibold transition-transform duration-300 transform ${
-                            expandedIndex === startIdx + index
-                              ? "bg-red-500 rotate-45"
-                              : "bg-green-400 hover:bg-green-500"
-                          }`}
-                        >
-                          +
-                        </button>
-                        <span className="font-medium text-gray-100">
-                          {startIdx + index + 1}
-                        </span>
-                      </td>
-                      <td
-                        onClick={() =>
-                          navigate("/directteamdetails", { state: { item } })
-                        }
-                        className="text-[#9DE0B6] cursor-pointer"
-                      >
-                        {item.username}
-                      </td>
+                  <tr
+                    key={index}
+                    className={
+                      (index + startIdx) % 2 === 0
+                        ? "bg-[#303C34]"
+                        : "bg-[#1F2C24]"
+                    }
+                  >
+                    <td className="text-nowrap text-center">{index + 1}</td>
+                    <td className="text-nowrap text-center">
+                      {item.from_user}
+                    </td>
+                    <td className="text-nowrap text-center">{item.level}</td>
 
-                      <td className="text-nowrap">{item.first_name}</td>
-                      <td>{item.phone_no}</td>
-                      <td>{item.email}</td>
-                      <td
-                        onClick={() =>
-                          navigate("/mydirectteam", { state: { item } })
-                        }
-                        className="text-[#58C4BB] cursor-pointer"
-                      >
-                        {item.username}
-                      </td>
-                    </tr>
-
-                    {expandedIndex === startIdx + index && (
-                      <tr>
-                        <td colSpan={6}>
-                          <div className="p-4 text-sm text-gray-200 animate-slideDown">
-                            <p>
-                              <strong>Created:</strong>{" "}
-                              {item.created_at
-                                ? new Date(item.created_at).toLocaleString(
-                                    "en-GB",
-                                    { hour12: false }
-                                  )
-                                : "-"}
-                            </p>
-                            <p>
-                              <strong>Activated:</strong>{" "}
-                              {item.activated_at || "-"}
-                            </p>
-                            <p>
-                              <strong>Delegator Amount:</strong> $
-                              {item.total_lend_amount || "0"}
-                            </p>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
+                    <td className="text-nowrap text-center">
+                      ${item.roi_amount}
+                    </td>
+                    <td className="text-nowrap text-center">
+                      ${item.level_income_received}
+                    </td>
+                    <td className="text-nowrap text-center">
+                      {item.timestamp}
+                    </td>
+                  </tr>
                 ))
               )}
             </tbody>
@@ -341,4 +295,4 @@ function MyDirect() {
   );
 }
 
-export default MyDirect;
+export default AmountDetail;

@@ -3,8 +3,10 @@ import axios from "axios";
 import useUserStore from "../../store/userStore";
 import useConstStore from "../../store/constStore";
 import Footer from "../../components/common/FooterTwo";
+import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
-function TeamNetwork() {
+function MyDirectTeam() {
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
 
@@ -15,15 +17,21 @@ function TeamNetwork() {
   const [currentPage, setCurrentPage] = useState(1);
   const [level, setlevel] = useState("");
 
-  // Fetch data
+  const location = useLocation();
+  const { item } = location.state;
+  const navigate = useNavigate();
+
+  const [searchData, setSearchData] = useState(item);
+
   useEffect(() => {
+    // console.log({ item });
     const fetchUserData = async () => {
       setScreenLoading(true);
       if (user && isConnected) {
         try {
           const { data: resp } = await axios.post(
-            `${baseUrl}my_team`,
-            { user_id: user?.id },
+            `${baseUrl}direct_team`,
+            { user_id: searchData?.id },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -32,7 +40,7 @@ function TeamNetwork() {
             }
           );
 
-          // console.log(resp.data);
+        //   console.log(resp.data);
 
           if (resp.status === 200) {
             setData(resp.data);
@@ -46,12 +54,11 @@ function TeamNetwork() {
       }
     };
     fetchUserData();
-  }, [user, isConnected, baseUrl, token, setScreenLoading]);
+  }, [user, isConnected, baseUrl, token, setScreenLoading, searchData]);
 
-  // Filter data when search changes
   useEffect(() => {
     const search = searchValue.trim().toLowerCase();
-    // console.log(search);
+
     const filtered = search
       ? data.filter(
           (item) =>
@@ -194,45 +201,59 @@ function TeamNetwork() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Referral ID</th>
                 <th>User ID</th>
                 <th>Name</th>
-                <th>Level</th>
+                <th>View Team</th>
+                <th>Total Member</th>
                 <th>Created</th>
                 <th>Activated</th>
-                <th>Enroll Amount</th>
+                <th>Delegator Amount</th>
               </tr>
             </thead>
             <tbody>
               {currentRows.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-4">
+                  <td colSpan={8} className="text-center py-4">
                     No Data Found
                   </td>
                 </tr>
               ) : (
                 currentRows.map((item, idx) => (
                   <tr key={`idx${idx}`}>
-                    <td>{idx + 1}</td>
-                    <td>{item.referral_id}</td>
-                    <td>{item.user_id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.level}</td>
-                    <td>
-                      {item.created_at
-                        ? new Date(item.created_at).toLocaleString("en-GB", {
+                    <td className="text-nowrap">{idx + 1}</td>
+                    <td
+                      onClick={() =>
+                        navigate("/directteamdetails", { state: { item } })
+                      }
+                      className="text-nowrap text-[#7de3a3] cursor-pointer"
+                    >
+                      {item.view_team}
+                    </td>
+                    <td className="text-nowrap">{item.name}</td>
+                    <td
+                      onClick={() => setSearchData(item)}
+                      className="text-nowrap text-[#2bdcc7] cursor-pointer"
+                    >
+                      {item.view_team}
+                    </td>
+                    <td className="text-nowrap">{item.total_member}</td>
+                    <td className="text-nowrap">
+                      {item.created != "-"
+                        ? new Date(item.created).toLocaleString("en-GB", {
                             hour12: false,
                           })
                         : "-"}
                     </td>
-                    <td>
-                      {item.activated_at
-                        ? new Date(item.activated_at).toLocaleString("en-GB", {
+                    <td className="text-nowrap">
+                      {item.activated != "-"
+                        ? new Date(item.activated).toLocaleString("en-GB", {
                             hour12: false,
                           })
                         : "-"}
                     </td>
-                    <td>{item.enroll_amount ?? "-"}</td>
+                    <td className="text-nowrap">
+                      {item.delegator_amount ?? "-"}
+                    </td>
                   </tr>
                 ))
               )}
@@ -292,4 +313,4 @@ function TeamNetwork() {
   );
 }
 
-export default TeamNetwork;
+export default MyDirectTeam;
