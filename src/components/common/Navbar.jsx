@@ -11,7 +11,7 @@ function Navbar() {
   const { isSidebarOpen, setIsSidebarOpen } = useModalStore();
   const { user } = useUserStore();
 
-  // console.log({ user });
+  console.log({ user });
 
   return (
     <div className="h-15 flex items-center justify-between px-6">

@@ -15,7 +15,7 @@ export default function BlockchainBlocksLoader() {
         ))}
       </div>
       <p className="mt-6 text-white tracking-widest text-lg font-semibold">
-        SYNCING <span className="text-[#8FFD9F]">CHAIN…</span>
+        Loading <span className="text-[#8FFD9F]">Data…</span>
       </p>
 
       <style>

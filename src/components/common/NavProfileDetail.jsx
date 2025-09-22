@@ -52,8 +52,8 @@ function NavProfileDetail() {
         <GiBanknote className="bg-[#4f5e54] p-1 text-2xl rounded-full" />
         <div className="text-xs font-semibold ">
           <div>
-            Delegator Amount ${dashboardData.total_investment} / [Rank: U2
-            SILVERrrrrrrrrr]
+            Delegator Amount ${dashboardData.total_investment} / [Rank:{" "}
+            {user.rank_name}]
           </div>
         </div>
       </div>
