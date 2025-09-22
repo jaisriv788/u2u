@@ -9,6 +9,9 @@ import Landing from "./screens/Landing";
 import Signin from "./screens/Signin";
 import Signup from "./screens/Signup";
 import Dashboard from "./screens/Dashboard";
+import Support from "./screens/Support";
+import ForgetPassword from "./screens/ForgetPassword";
+import ResetPassword from "./screens/ResetPassword";
 
 //authentication screens
 import Profile from "./screens/Authentication/Profile";
@@ -63,11 +66,15 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
+          <Route path="/signup/:referralId?" element={<Signup />} />
         </Route>
 
         {/*private route*/}
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/support" element={<Support />} />
 
           {/*authentication route*/}
           <Route path="/profile" element={<Profile />} />

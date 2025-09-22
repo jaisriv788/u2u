@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import axios from "axios";
 import useConstStore from "../store/constStore";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 function Signup() {
+  const { referralId: referralIdParam } = useParams();
+  const [referralLocked, setReferralLocked] = useState(false);
   const [referralId, setReferralId] = useState("");
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -21,6 +23,13 @@ function Signup() {
   const { baseUrl } = useConstStore();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (referralIdParam) {
+      setReferralId(referralIdParam);
+      setReferralLocked(true);
+    }
+  }, [referralIdParam]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -102,6 +111,7 @@ function Signup() {
             placeholder="Referral Id"
             value={referralId}
             required
+            disabled={referralLocked}
             onChange={(e) => setReferralId(e.target.value)}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />

@@ -132,15 +132,18 @@ function AmountDetail() {
 
   return (
     <div className="flex-1 p-4 flex flex-col overflow-x-hidden">
-      <div className="rounded-lg bg-[#1F2C24] px-5 py-2 mb-5">
+      <div className="flex justify-between items-center">
+        <div className="text-lg font-semibold">Level Network</div>
+        <div className="text-xs">
+          <span className="text-green-300">Network</span> {">>"} Level Network
+        </div>
+      </div>
+      <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
         <div className="font-semibold border-b border-gray-500 pb-3">
-          My Direct Team
+          Level Network
         </div>
 
         <div className="pt-3">
-          <div className="text-sm text-gray-300">
-            View your referral network
-          </div>
           <div className="mt-3 flex md:flex-row flex-col md:gap-5 gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-sm">From Date</label>
@@ -196,9 +199,9 @@ function AmountDetail() {
         </div>
 
         {/* ✅ Constrain the wrapper so it never grows wider than the screen */}
-        <div className="overflow-x-auto w-full max-w-full mt-4">
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-114">
           <table className="table w-full text-xs">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th className="text-center">S.no</th>
                 <th className="text-center">From User</th>

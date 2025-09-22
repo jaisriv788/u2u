@@ -6,7 +6,7 @@ function Card({ title, balance, icon }) {
         <Icon /> {title}
       </div>
       <div className="bg-gradient-to-br py-6 px-8 font-bold text-2xl from-[#0F0F1D] via-[#102031] to-[#24BB79]">
-        $ {balance}
+        $ {balance ? balance : "0.0000"}
       </div>
     </div>
   );

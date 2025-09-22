@@ -12,7 +12,7 @@ function DetailedCards({ amount, title, children }) {
           <div className="text-md">{title}</div>
           <div className="text-xl font-bold">
             <span className="font-semibold text-[#1FD022] text-xl">$</span>{" "}
-            {amount && amount}
+            {amount ? amount : "0.0000"}
           </div>
         </div>
       </div>

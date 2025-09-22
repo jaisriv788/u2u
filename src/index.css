@@ -40,3 +40,9 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+.box {
+  border-radius: 36px;
+  background: #e0e0e0;
+  box-shadow: inset 14px 14px 28px #898989, inset -14px -14px 28px #ffffff;
+}

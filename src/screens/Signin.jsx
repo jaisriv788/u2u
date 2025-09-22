@@ -70,7 +70,7 @@ function Signin() {
           </button>
         </form>
         <div className="mt-5 text-sm text-purple-800">
-          <Link to="/" className="cursor-pointer">
+          <Link to="/forgetpassword" className="cursor-pointer">
             Forgot Password?
           </Link>{" "}
           <Link to="/signup" className="cursor-pointer">

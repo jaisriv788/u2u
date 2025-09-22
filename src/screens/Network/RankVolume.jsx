@@ -55,7 +55,7 @@ function RankVolume() {
 
         <div className="overflow-x-auto mt-4 ">
           <table className="table w-full text-xs ">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th>Strong Leg / Other Leg (Criteria)</th>
                 <th>Strong Leg Volume</th>
@@ -66,7 +66,7 @@ function RankVolume() {
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center">
+                  <td colSpan={4} className="text-center">
                     No Data Found
                   </td>
                 </tr>
@@ -74,9 +74,9 @@ function RankVolume() {
                 data.map((item, index) => (
                   <tr key={index}>
                     <td className="text-nowrap ">{item.criteria}</td>
-                    <td className="">{item.strong_leg}</td>
-                    <td className="">{item.other_leg}</td>
-                    <td className="">{item.reward}</td>
+                    <td className="text-nowrap">{item.strong_leg}</td>
+                    <td className="text-nowrap">{item.other_leg}</td>
+                    <td className="text-nowrap">{item.reward}</td>
                   </tr>
                 ))
               )}

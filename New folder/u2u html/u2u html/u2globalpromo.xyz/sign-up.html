@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<script>
+function noBack(){window.history.forward()}
+noBack();
+window.onload=noBack;
+window.onpageshow=function(evt){if(evt.persisted)noBack()}
+window.onunload=function(){void(0)}
+</script>
+
+<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="dark" data-toggled="close" data-vertical-style="default" data-card-style="style1" data-card-background="background1" >
+
+
+<!-- Mirrored from u2globalpromo.xyz/sign-up.asp by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Apr 2025 08:35:54 GMT -->
+<head>
+
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> U2GP -  </title>
+    <meta name="Description" content="">
+    <meta name="Author" content="">
+	<meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/brand-logos/favicon.ico" type="image/x-icon">
+
+    <!-- Main Theme Js -->
+    <script src="assets/js/authentication-main.js"></script>
+
+    <!-- Bootstrap Css -->
+    <link id="style" href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+
+    <!-- Style Css -->
+    <link href="assets/css/styles.css" rel="stylesheet" >
+
+    <!-- Icons Css -->
+    <link href="assets/css/icons.css" rel="stylesheet" >
+	
+	<style>
+/* Style all input fields */
+
+/* Style the container for inputs */
+.container {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+</style>
+
+<script src="../ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script language="javascript">
+
+		function a()
+		{
+
+	 
+			
+			if(document.form1.temail.value=="")
+			{
+			alert("Email Entered Seems To Be Wrong , Enter Proper Email")
+			document.form1.logpass.focus()
+			return false;
+			}			
+
+			if (document.form1.reEmail.value=="")
+			{
+				alert("Please Enter Confirm Email")
+				document.form1.reEmail.focus()
+				return false;
+			}
+			
+			if (document.form1.temail.value != document.form1.reEmail.value)
+			{
+				alert("New Email and Confirm Email Not Matched, Please Enter Properly")
+				document.form1.reEmail.focus()
+				return false;
+			}
+
+
+		
+			
+			return true;
+		}
+		
+		
+	
+</script>
+	
+	
+ <script type="text/javascript">
+function allLetter()  
+{   
+var letters = /^[0-9a-zA-Z]+$/;  
+if(document.form1.uname.value.match(letters))  
+{  
+return true;  
+}  
+else  
+{  
+document.form1.uname.value="";  
+document.form1.uname.focus();  
+return false;  
+}  
+}  
+
+ 
+</script>
+        
+        <script language="javascript">
+
+
+	function check_userid()
+    {
+        var prevalue=document.form1.uname.value;
+		var newvalue=prevalue;
+        prevalue="";
+        
+        for(i=0;i<newvalue.length;i++)
+        {        
+            if(newvalue.charCodeAt(i)==32)
+            {
+                alert("Incorrect....!\nYou Can can't press space key");               
+            }
+            
+            else
+            {                
+                prevalue+=newvalue.charAt(i);
+            }     
+        }
+        
+        document.form1.uname.value=prevalue;            
+    } 
+
+		
+		
+		
+</script>
+
+</head>
+
+<body class="authentication-background">
+
+    <!-- Start Switcher -->
+    <div class="offcanvas offcanvas-end switcher-offacanvas" tabindex="-1" id="switcher-canvas" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header border-bottom d-block p-0">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <h5 class="offcanvas-title text-default" id="offcanvasRightLabel">Switcher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <nav class="border-top border-block-start-dashed">
+                <div class="nav nav-tabs nav-justified" id="switcher-main-tab" role="tablist">
+                    <button class="nav-link active" id="switcher-home-tab" data-bs-toggle="tab" data-bs-target="#switcher-home"
+                        type="button" role="tab" aria-controls="switcher-home" aria-selected="true">Theme Styles</button>
+                    <button class="nav-link" id="switcher-profile-tab" data-bs-toggle="tab" data-bs-target="#switcher-profile"
+                        type="button" role="tab" aria-controls="switcher-profile" aria-selected="false">Theme Colors</button>
+                </div>
+            </nav>
+        </div>
+        <div class="offcanvas-body">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active border-0" id="switcher-home" role="tabpanel" aria-labelledby="switcher-home-tab"
+                    tabindex="0">
+                    <div class="">
+                        <p class="switcher-style-head">Directions:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-ltr">
+                                        LTR
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="direction" id="switcher-ltr" checked>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-rtl">
+                                        RTL
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="direction" id="switcher-rtl">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="switcher-style-head">Navigation Styles:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-vertical">
+                                        Vertical
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-style" id="switcher-vertical"
+                                        checked>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-horizontal">
+                                        Horizontal
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-style"
+                                        id="switcher-horizontal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navigation-menu-styles">
+                        <p class="switcher-style-head">Vertical & Horizontal Menu Styles:</p>
+                        <div class="row switcher-style gx-0 pb-2 gy-2">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-menu-click">
+                                        Menu Click
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-menu-styles"
+                                        id="switcher-menu-click">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-menu-hover">
+                                        Menu Hover
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-menu-styles"
+                                        id="switcher-menu-hover">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-icon-click">
+                                        Icon Click
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-menu-styles"
+                                        id="switcher-icon-click">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-icon-hover">
+                                        Icon Hover
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="navigation-menu-styles"
+                                        id="switcher-icon-hover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidemenu-layout-styles">
+                        <p class="switcher-style-head">Sidemenu Layout Styles:</p>
+                        <div class="row switcher-style gx-0 pb-2 gy-2">
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-default-menu">
+                                        Default Menu
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-default-menu">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-closed-menu">
+                                        Closed Menu
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-closed-menu">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-icontext-menu">
+                                        Icon Text
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-icontext-menu">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-icon-overlay">
+                                        Icon Overlay
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-icon-overlay">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-detached">
+                                        Detached
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-detached" checked>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-double-menu">
+                                        Double Menu
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="sidemenu-layout-styles"
+                                        id="switcher-double-menu">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="switcher-style-head">Layout Width Styles:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-full-width">
+                                        Full Width
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="layout-width" id="switcher-full-width"
+                                        checked>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-boxed">
+                                        Boxed
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="layout-width" id="switcher-boxed">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="switcher-style-head">Menu Positions:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-menu-fixed">
+                                        Fixed
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="menu-positions" id="switcher-menu-fixed"
+                                        checked>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-menu-scroll">
+                                        Scrollable
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="menu-positions" id="switcher-menu-scroll">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="switcher-style-head">Header Positions:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-header-fixed">
+                                        Fixed
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="header-positions"
+                                        id="switcher-header-fixed" checked>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-header-scroll">
+                                        Scrollable
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="header-positions"
+                                        id="switcher-header-scroll">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class="switcher-style-head">Loader:</p>
+                        <div class="row switcher-style gx-0">
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-loader-enable">
+                                        Enable
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="page-loader"
+                                        id="switcher-loader-enable">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check switch-select">
+                                    <label class="form-check-label" for="switcher-loader-disable">
+                                        Disable
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="page-loader"
+                                        id="switcher-loader-disable" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade border-0" id="switcher-profile" role="tabpanel" aria-labelledby="switcher-profile-tab" tabindex="0">
+                    <div>
+                        <div class="theme-colors">
+                            <p class="switcher-style-head">Theme Primary:</p>
+                            <div class="d-flex flex-wrap align-items-center switcher-style">
+                                <div class="form-check switch-select me-3">
+                                    <input class="form-check-input color-input color-primary-1" type="radio"
+                                        name="theme-primary" id="switcher-primary">
+                                </div>
+                                <div class="form-check switch-select me-3">
+                                    <input class="form-check-input color-input color-primary-2" type="radio"
+                                        name="theme-primary" id="switcher-primary1">
+                                </div>
+                                <div class="form-check switch-select me-3">
+                                    <input class="form-check-input color-input color-primary-3" type="radio" name="theme-primary"
+                                        id="switcher-primary2">
+                                </div>
+                                <div class="form-check switch-select me-3">
+                                    <input class="form-check-input color-input color-primary-4" type="radio" name="theme-primary"
+                                        id="switcher-primary3">
+                                </div>
+                                <div class="form-check switch-select me-3">
+                                    <input class="form-check-input color-input color-primary-5" type="radio" name="theme-primary"
+                                        id="switcher-primary4">
+                                </div>
+                                <div class="form-check switch-select ps-0 mt-1 color-primary-light">
+                                    <div class="theme-container-primary"></div>
+                                    <div class="pickr-container-primary"  onchange="updateChartColor(this.value)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pattern-image mb-3">
+                            <p class="switcher-style-head">Background Patterns:</p>
+                            <div class="d-flex flex-wrap align-items-center switcher-style">
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern1" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern2" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img1">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern3" type="radio" name="background-pattern"
+                                        id="switcher-pattern-img2">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern4" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img3" checked>
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern5" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img4">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern6" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img5">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern7" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img6">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern8" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img7">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern9" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img8">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input patternimage-input bg-pattern10" type="radio"
+                                        name="background-pattern" id="switcher-pattern-img9">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-style mb-3">
+                            <p class="switcher-style-head">Card Styling:</p>
+                            <div class="d-flex flex-wrap align-items-center switcher-style">
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style1" type="radio"
+                                        name="card-style" id="switcher-card-style" checked>
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style2" type="radio"
+                                        name="card-style" id="switcher-card-style1">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style3" type="radio" name="card-style"
+                                        id="switcher-card-style2">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style4" type="radio"
+                                        name="card-style" id="switcher-card-style3">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style5" type="radio"
+                                        name="card-style" id="switcher-card-style4">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style6" type="radio"
+                                        name="card-style" id="switcher-card-style5">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style7" type="radio"
+                                        name="card-style" id="switcher-card-style6">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style8" type="radio"
+                                        name="card-style" id="switcher-card-style7">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style9" type="radio"
+                                        name="card-style" id="switcher-card-style8">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-style10" type="radio"
+                                        name="card-style" id="switcher-card-style9">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-background mb-3">
+                            <p class="switcher-style-head">Card Background:</p>
+                            <div class="d-flex flex-wrap align-items-center switcher-style">
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background1" type="radio"
+                                        name="card-background" id="switcher-card-background" checked>
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background2" type="radio"
+                                        name="card-background" id="switcher-card-background1">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background3" type="radio" name="card-background"
+                                        id="switcher-card-background2">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background4" type="radio"
+                                        name="card-background" id="switcher-card-background3">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background5" type="radio"
+                                        name="card-background" id="switcher-card-background4">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background6" type="radio"
+                                        name="card-background" id="switcher-card-background5">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background7" type="radio"
+                                        name="card-background" id="switcher-card-background6">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background8" type="radio"
+                                        name="card-background" id="switcher-card-background7">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input card-input card-background9" type="radio"
+                                        name="card-background" id="switcher-card-background8">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="menu-image mb-3">
+                            <p class="switcher-style-head">Menu With Background Image:</p>
+                            <div class="d-flex flex-wrap align-items-center switcher-style">
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input bgimage-input bg-img1" type="radio"
+                                        name="theme-background" id="switcher-bg-img">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input bgimage-input bg-img2" type="radio"
+                                        name="theme-background" id="switcher-bg-img1">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input bgimage-input bg-img3" type="radio" name="theme-background"
+                                        id="switcher-bg-img2">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input bgimage-input bg-img4" type="radio"
+                                        name="theme-background" id="switcher-bg-img3">
+                                </div>
+                                <div class="form-check switch-select m-2">
+                                    <input class="form-check-input bgimage-input bg-img5" type="radio"
+                                        name="theme-background" id="switcher-bg-img4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between canvas-footer flex-sm-nowrap flex-wrap gap-2">
+                    <a href="https://themeforest.net/user/spruko/portfolio" target="_blank" class="btn btn-primary flex-fill">Buy Now</a> 
+                    <a href="https://themeforest.net/user/spruko/portfolio" target="_blank" class="btn btn-secondary flex-fill">Our Portfolio</a> 
+                    <a href="javascript:void(0);" id="reset-all" class="btn btn-danger flex-fill">Reset</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Switcher -->
+	
+	 <script>
+      function for_name_check()
+	  { 
+	    var value=document.form1.uname.value;
+			 $.ajax({
+			  type: "POST",
+              url: "search.asp?id="+value+"",
+              cache: false,
+              success: function(detail){
+              $('#example1').html(detail);
+              }
+           });
+				
+
+	   }
+
+
+
+	</script>
+	
+	
+				
+
+
+    <div class="container-lg">
+        <div class="row justify-content-center align-items-center authentication authentication-basic h-100">
+            <div class="col-xxl-5 col-xl-5 col-md-6 col-sm-8 col-12">
+                <div class="card custom-card my-4">
+                    <div class="top-left"></div>
+                    <div class="top-right"></div>
+                    <div class="bottom-left"></div>
+                    <div class="bottom-right"></div>
+					<form action="https://u2globalpromo.xyz/registeraspx.asp" method="post" name="form1" id="form1" onsubmit="return a();" autocomplete="off" > 
+                    <div class="card-body p-5">
+                        <div class="mb-3 d-flex justify-content-center">
+                            <a href="index.html">
+                                <img src="assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
+                                <img src="assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
+                            </a>
+                        </div>
+                        <p class="h5 mb-2 text-center">Sign Up</p>
+                        <p class="mb-4 text-muted op-7 fw-normal text-center fs-14">Welcome! Begin by creating your account.</p>
+                        
+                        <div class="row gy-3">
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Referral Code<sup>*</sup></label>
+                             
+								<input class="form-control form--control" type="text" value="" name="VAR_GIFTCODE" id="VAR_GIFTCODE" placeholder="Enter u2dpn Referral Code" required>
+                            </div>
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Username<sup>*</sup></label>
+								<input type="text" class="form-control form--control" name="uname" id="uname" value="" maxlength="15" onkeyup="return allLetter();"  onchange="for_name_check();" placeholder="Enter Username " required>
+								<table>
+								<tbody id="example1">
+							   </tbody>
+							   </table>  
+                            </div>
+                            <div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Full Name<sup>*</sup></label>
+                                <input class="form-control form--control" type="text" name="app_name" id="app_name" placeholder="Full name" required>
+                            </div>
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Email<sup>*</sup></label>
+                                <input class="form-control form--control" type="email" name="temail" id="temail" placeholder="Email address" required>
+                            </div>
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Re-enter Email<sup>*</sup></label>
+                                <input class="form-control form--control" type="email" name="reEmail" id="reEmail" placeholder="Email address" required>
+								<p class="error" id="error-message"></p>
+                            </div>
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Mobile<sup>*</sup></label>
+                                <input class="form-control form--control" type="text" name="tmob" id="tmob" placeholder="Mobile Number" required>
+                            </div>
+							<div class="col-xl-12">
+                                <label for="signup-firstname" class="form-label text-default">Country<sup>*</sup></label>
+                                <select class="form-control form--control" id="country" style="width:100%" name="country" required>
+													<option value="">Country...</option>
+													<option value="Afganistan">Afghanistan</option>
+													<option value="Albania">Albania</option>
+													<option value="Algeria">Algeria</option>
+													<option value="American Samoa">American Samoa</option>
+													<option value="Andorra">Andorra</option>
+													<option value="Angola">Angola</option>
+													<option value="Anguilla">Anguilla</option>
+													<option value="Antigua &amp; Barbuda">Antigua &amp; Barbuda</option>
+													<option value="Argentina">Argentina</option>
+													<option value="Armenia">Armenia</option>
+													<option value="Aruba">Aruba</option>
+													<option value="Australia">Australia</option>
+													<option value="Austria">Austria</option>
+													<option value="Azerbaijan">Azerbaijan</option>
+													<option value="Bahamas">Bahamas</option>
+													<option value="Bahrain">Bahrain</option>
+													<option value="Bangladesh">Bangladesh</option>
+													<option value="Barbados">Barbados</option>
+													<option value="Belarus">Belarus</option>
+													<option value="Belgium">Belgium</option>
+													<option value="Belize">Belize</option>
+													<option value="Benin">Benin</option>
+													<option value="Bermuda">Bermuda</option>
+													<option value="Bhutan">Bhutan</option>
+													<option value="Bolivia">Bolivia</option>
+													<option value="Bonaire">Bonaire</option>
+													<option value="Bosnia &amp; Herzegovina">Bosnia &amp; Herzegovina</option>
+													<option value="Botswana">Botswana</option>
+													<option value="Brazil">Brazil</option>
+													<option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+													<option value="Brunei">Brunei</option>
+													<option value="Bulgaria">Bulgaria</option>
+													<option value="Burkina Faso">Burkina Faso</option>
+													<option value="Burundi">Burundi</option>
+													<option value="Cambodia">Cambodia</option>
+													<option value="Cameroon">Cameroon</option>
+													<option value="Canada">Canada</option>
+													<option value="Canary Islands">Canary Islands</option>
+													<option value="Cape Verde">Cape Verde</option>
+													<option value="Cayman Islands">Cayman Islands</option>
+													<option value="Central African Republic">Central African Republic</option>
+													<option value="Chad">Chad</option>
+													<option value="Channel Islands">Channel Islands</option>
+													<option value="Chile">Chile</option>
+													<option value="China">China</option>
+													<option value="Christmas Island">Christmas Island</option>
+													<option value="Cocos Island">Cocos Island</option>
+													<option value="Colombia">Colombia</option>
+													<option value="Comoros">Comoros</option>
+													<option value="Congo">Congo</option>
+													<option value="Cook Islands">Cook Islands</option>
+													<option value="Costa Rica">Costa Rica</option>
+													<option value="Cote DIvoire">Cote D'Ivoire</option>
+													<option value="Croatia">Croatia</option>
+													<option value="Cuba">Cuba</option>
+													<option value="Curaco">Curacao</option>
+													<option value="Cyprus">Cyprus</option>
+													<option value="Czech Republic">Czech Republic</option>
+													<option value="Denmark">Denmark</option>
+													<option value="Djibouti">Djibouti</option>
+													<option value="Dominica">Dominica</option>
+													<option value="Dominican Republic">Dominican Republic</option>
+													<option value="East Timor">East Timor</option>
+													<option value="Ecuador">Ecuador</option>
+													<option value="Egypt">Egypt</option>
+													<option value="El Salvador">El Salvador</option>
+													<option value="Equatorial Guinea">Equatorial Guinea</option>
+													<option value="Eritrea">Eritrea</option>
+													<option value="Estonia">Estonia</option>
+													<option value="Ethiopia">Ethiopia</option>
+													<option value="Falkland Islands">Falkland Islands</option>
+													<option value="Faroe Islands">Faroe Islands</option>
+													<option value="Fiji">Fiji</option>
+													<option value="Finland">Finland</option>
+													<option value="France">France</option>
+													<option value="French Guiana">French Guiana</option>
+													<option value="French Polynesia">French Polynesia</option>
+													<option value="French Southern Ter">French Southern Ter</option>
+													<option value="Gabon">Gabon</option>
+													<option value="Gambia">Gambia</option>
+													<option value="Georgia">Georgia</option>
+													<option value="Germany">Germany</option>
+													<option value="Ghana">Ghana</option>
+													<option value="Gibraltar">Gibraltar</option>
+													<option value="Great Britain">Great Britain</option>
+													<option value="Greece">Greece</option>
+													<option value="Greenland">Greenland</option>
+													<option value="Grenada">Grenada</option>
+													<option value="Guadeloupe">Guadeloupe</option>
+													<option value="Guam">Guam</option>
+													<option value="Guatemala">Guatemala</option>
+													<option value="Guinea">Guinea</option>
+													<option value="Guyana">Guyana</option>
+													<option value="Haiti">Haiti</option>
+													<option value="Hawaii">Hawaii</option>
+													<option value="Honduras">Honduras</option>
+													<option value="Hong Kong">Hong Kong</option>
+													<option value="Hungary">Hungary</option>
+													<option value="Iceland">Iceland</option>
+													<option value="India">India</option>
+													<option value="Indonesia">Indonesia</option>
+													<option value="Iran">Iran</option>
+													<option value="Iraq">Iraq</option>
+													<option value="Ireland">Ireland</option>
+													<option value="Isle of Man">Isle of Man</option>
+													<option value="Israel">Israel</option>
+													<option value="Italy">Italy</option>
+													<option value="Jamaica">Jamaica</option>
+													<option value="Japan">Japan</option>
+													<option value="Jordan">Jordan</option>
+													<option value="Kazakhstan">Kazakhstan</option>
+													<option value="Kenya">Kenya</option>
+													<option value="Kiribati">Kiribati</option>
+													<option value="Korea North">Korea North</option>
+													<option value="Korea Sout">Korea South</option>
+													<option value="Kuwait">Kuwait</option>
+													<option value="Kyrgyzstan">Kyrgyzstan</option>
+													<option value="Laos">Laos</option>
+													<option value="Latvia">Latvia</option>
+													<option value="Lebanon">Lebanon</option>
+													<option value="Lesotho">Lesotho</option>
+													<option value="Liberia">Liberia</option>
+													<option value="Libya">Libya</option>
+													<option value="Liechtenstein">Liechtenstein</option>
+													<option value="Lithuania">Lithuania</option>
+													<option value="Luxembourg">Luxembourg</option>
+													<option value="Macau">Macau</option>
+													<option value="Macedonia">Macedonia</option>
+													<option value="Madagascar">Madagascar</option>
+													<option value="Malaysia">Malaysia</option>
+													<option value="Malawi">Malawi</option>
+													<option value="Maldives">Maldives</option>
+													<option value="Mali">Mali</option>
+													<option value="Malta">Malta</option>
+													<option value="Marshall Islands">Marshall Islands</option>
+													<option value="Martinique">Martinique</option>
+													<option value="Mauritania">Mauritania</option>
+													<option value="Mauritius">Mauritius</option>
+													<option value="Mayotte">Mayotte</option>
+													<option value="Mexico">Mexico</option>
+													<option value="Midway Islands">Midway Islands</option>
+													<option value="Moldova">Moldova</option>
+													<option value="Monaco">Monaco</option>
+													<option value="Mongolia">Mongolia</option>
+													<option value="Montserrat">Montserrat</option>
+													<option value="Morocco">Morocco</option>
+													<option value="Mozambique">Mozambique</option>
+													<option value="Myanmar">Myanmar</option>
+													<option value="Nambia">Nambia</option>
+													<option value="Nauru">Nauru</option>
+													<option value="Nepal">Nepal</option>
+													<option value="Netherland Antilles">Netherland Antilles</option>
+													<option value="Netherlands">Netherlands (Holland, Europe)</option>
+													<option value="Nevis">Nevis</option>
+													<option value="New Caledonia">New Caledonia</option>
+													<option value="New Zealand">New Zealand</option>
+													<option value="Nicaragua">Nicaragua</option>
+													<option value="Niger">Niger</option>
+													<option value="Nigeria">Nigeria</option>
+													<option value="Niue">Niue</option>
+													<option value="Norfolk Island">Norfolk Island</option>
+													<option value="Norway">Norway</option>
+													<option value="Oman">Oman</option>
+													<option value="Pakistan">Pakistan</option>
+													<option value="Palau Island">Palau Island</option>
+													<option value="Palestine">Palestine</option>
+													<option value="Panama">Panama</option>
+													<option value="Papua New Guinea">Papua New Guinea</option>
+													<option value="Paraguay">Paraguay</option>
+													<option value="Peru">Peru</option>
+													<option value="Phillipines">Philippines</option>
+													<option value="Pitcairn Island">Pitcairn Island</option>
+													<option value="Poland">Poland</option>
+													<option value="Portugal">Portugal</option>
+													<option value="Puerto Rico">Puerto Rico</option>
+													<option value="Qatar">Qatar</option>
+													<option value="Republic of Montenegro">Republic of Montenegro</option>
+													<option value="Republic of Serbia">Republic of Serbia</option>
+													<option value="Reunion">Reunion</option>
+													<option value="Romania">Romania</option>
+													<option value="Russia">Russia</option>
+													<option value="Rwanda">Rwanda</option>
+													<option value="St Barthelemy">St Barthelemy</option>
+													<option value="St Eustatius">St Eustatius</option>
+													<option value="St Helena">St Helena</option>
+													<option value="St Kitts-Nevis">St Kitts-Nevis</option>
+													<option value="St Lucia">St Lucia</option>
+													<option value="St Maarten">St Maarten</option>
+													<option value="St Pierre &amp; Miquelon">St Pierre &amp; Miquelon</option>
+													<option value="St Vincent &amp; Grenadines">St Vincent &amp; Grenadines</option>
+													<option value="Saipan">Saipan</option>
+													<option value="Samoa">Samoa</option>
+													<option value="Samoa American">Samoa American</option>
+													<option value="San Marino">San Marino</option>
+													<option value="Sao Tome &amp; Principe">Sao Tome &amp; Principe</option>
+													<option value="Saudi Arabia">Saudi Arabia</option>
+													<option value="Senegal">Senegal</option>
+													<option value="Serbia">Serbia</option>
+													<option value="Seychelles">Seychelles</option>
+													<option value="Sierra Leone">Sierra Leone</option>
+													<option value="Singapore">Singapore</option>
+													<option value="Slovakia">Slovakia</option>
+													<option value="Slovenia">Slovenia</option>
+													<option value="Solomon Islands">Solomon Islands</option>
+													<option value="Somalia">Somalia</option>
+													<option value="South Africa">South Africa</option>
+													<option value="Spain">Spain</option>
+													<option value="Sri Lanka">Sri Lanka</option>
+													<option value="Sudan">Sudan</option>
+													<option value="Suriname">Suriname</option>
+													<option value="Swaziland">Swaziland</option>
+													<option value="Sweden">Sweden</option>
+													<option value="Switzerland">Switzerland</option>
+													<option value="Syria">Syria</option>
+													<option value="Tahiti">Tahiti</option>
+													<option value="Taiwan">Taiwan</option>
+													<option value="Tajikistan">Tajikistan</option>
+													<option value="Tanzania">Tanzania</option>
+													<option value="Thailand">Thailand</option>
+													<option value="Togo">Togo</option>
+													<option value="Tokelau">Tokelau</option>
+													<option value="Tonga">Tonga</option>
+													<option value="Trinidad &amp; Tobago">Trinidad &amp; Tobago</option>
+													<option value="Tunisia">Tunisia</option>
+													<option value="Turkey">Turkey</option>
+													<option value="Turkmenistan">Turkmenistan</option>
+													<option value="Turks &amp; Caicos Is">Turks &amp; Caicos Is</option>
+													<option value="Tuvalu">Tuvalu</option>
+													<option value="Uganda">Uganda</option>
+													<option value="Ukraine">Ukraine</option>
+													<option value="United Arab Erimates">United Arab Emirates</option>
+													<option value="United Kingdom">United Kingdom</option>
+													<option value="United States of America">United States of America</option>
+													<option value="Uraguay">Uruguay</option>
+													<option value="Uzbekistan">Uzbekistan</option>
+													<option value="Vanuatu">Vanuatu</option>
+													<option value="Vatican City State">Vatican City State</option>
+													<option value="Venezuela">Venezuela</option>
+													<option value="Vietnam">Vietnam</option>
+													<option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+													<option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+													<option value="Wake Island">Wake Island</option>
+													<option value="Wallis &amp; Futana Is">Wallis &amp; Futana Is</option>
+													<option value="Yemen">Yemen</option>
+													<option value="Zaire">Zaire</option>
+													<option value="Zambia">Zambia</option>
+													<option value="Zimbabwe">Zimbabwe</option>
+												  </select>
+                            </div>
+                            <div class="col-xl-12">
+                                <label for="signup-password" class="form-label text-default">Password<sup>*</sup></label>
+                                <div class="position-relative">
+                                    <input class="form-control form--control password-field" type="password" id="logpass" name="logpass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password" required>
+                                    <a href="javascript:void(0);" class="show-password-button text-muted" onclick="createpassword('signup-password',this)"  id="button-addon2"><i class="ri-eye-off-line align-middle"></i></a>
+                                </div>
+								
+								<div id="message">
+								  <h2><font color='#000000'>Password must contain the following:</font></h2>
+								  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+								  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+								  <p id="number" class="invalid">A <b>number</b></p>
+								  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+								</div>
+								
+								<script>
+									var myInput = document.getElementById("logpass");
+									var letter = document.getElementById("letter");
+									var capital = document.getElementById("capital");
+									var number = document.getElementById("number");
+									var length = document.getElementById("length");
+
+									// When the user clicks on the password field, show the message box
+									myInput.onfocus = function() {
+									  document.getElementById("message").style.display = "block";
+									}
+
+									// When the user clicks outside of the password field, hide the message box
+									myInput.onblur = function() {
+									  document.getElementById("message").style.display = "none";
+									}
+
+									// When the user starts to type something inside the password field
+									myInput.onkeyup = function() {
+									  // Validate lowercase letters
+									  var lowerCaseLetters = /[a-z]/g;
+									  if(myInput.value.match(lowerCaseLetters)) {  
+										letter.classList.remove("invalid");
+										letter.classList.add("valid");
+									  } else {
+										letter.classList.remove("valid");
+										letter.classList.add("invalid");
+									  }
+									  
+									  // Validate capital letters
+									  var upperCaseLetters = /[A-Z]/g;
+									  if(myInput.value.match(upperCaseLetters)) {  
+										capital.classList.remove("invalid");
+										capital.classList.add("valid");
+									  } else {
+										capital.classList.remove("valid");
+										capital.classList.add("invalid");
+									  }
+
+									  // Validate numbers
+									  var numbers = /[0-9]/g;
+									  if(myInput.value.match(numbers)) {  
+										number.classList.remove("invalid");
+										number.classList.add("valid");
+									  } else {
+										number.classList.remove("valid");
+										number.classList.add("invalid");
+									  }
+									  
+									  // Validate length
+									  if(myInput.value.length >= 8) {
+										length.classList.remove("invalid");
+										length.classList.add("valid");
+									  } else {
+										length.classList.remove("valid");
+										length.classList.add("invalid");
+									  }
+									}
+									</script>
+                            </div>
+							
+                            <div class="col-xl-12">
+                         
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" required>
+                                    <label class="form-check-label text-muted fw-normal fs-14" for="defaultCheck1">
+                                    </label>
+                                    By creating a account you agree to our 
+                                    <a href="#" class="text-success"><u>Terms & Conditions</u></a> and <a class="text-success"><u>Privacy Policy</u></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button class="btn btn-primary" type="submit">Create Account</button>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-muted mt-3 mb-0">Already have an account? <a href="sign-in.html" class="text-primary">Sign In</a></p>
+                        </div>
+                        <div class="btn-list text-center mt-3">
+                            <button class="btn btn-icon btn-sm btn-wave authentication-social-btn">
+                                <i class="ri-facebook-line fw-bold"></i>
+                            </button>
+                            <button class="btn btn-icon btn-sm btn-wave authentication-social-btn">
+                                <i class="ri-twitter-x-line fw-bold"></i>
+                            </button>
+                            <button class="btn btn-icon btn-sm btn-wave authentication-social-btn">
+                                <i class="ri-instagram-line fw-bold"></i>
+                            </button>
+                        </div>
+					
+                    </div>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Show Password JS -->
+    <script src="assets/js/show-password.js"></script>
+
+</body>
+
+
+<!-- Mirrored from u2globalpromo.xyz/sign-up.asp by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Apr 2025 08:35:55 GMT -->
+</html>

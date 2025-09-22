@@ -57,7 +57,7 @@ function LevelVolume() {
 
         <div className="overflow-x-auto mt-4 w-full max-w-full">
           <table className="table w-full text-xs ">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th className="text-center"> Level</th>
                 <th className="text-center">Total User</th>
@@ -69,7 +69,7 @@ function LevelVolume() {
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center">
+                  <td colSpan={5} className="text-center">
                     No Data Found
                   </td>
                 </tr>

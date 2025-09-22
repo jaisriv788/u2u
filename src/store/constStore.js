@@ -6,7 +6,7 @@ const useConstStore = create(
     persist(
       (set) => ({
         baseUrl: "https://worldofSoftware.in/u2u_global/api/",
-        screenLoading: true,
+        screenLoading: false,
         setScreenLoading: (screenLoading) => set({ screenLoading }),
       }),
       {

@@ -4,10 +4,14 @@ import profileImgSrc from "../../assets/Navbar/profile.png";
 import NavProfileDetail from "./NavProfileDetail";
 import { MdMenuOpen } from "react-icons/md";
 import useModalStore from "../../store/modalStore";
+import useUserStore from "../../store/userStore";
 
 function Navbar() {
   const [isProfileDetailOpen, setIsProfileDetailOpen] = useState(false);
   const { isSidebarOpen, setIsSidebarOpen } = useModalStore();
+  const { user } = useUserStore();
+
+  // console.log({ user });
 
   return (
     <div className="h-15 flex items-center justify-between px-6">
@@ -30,7 +34,11 @@ function Navbar() {
         }}
         className="rounded w-10 h-10 bg-[#1F2C24] flex items-center cursor-pointer justify-center hover:bg-[#38C66C] transition ease-in-out duration-300"
       >
-        <img src={profileImgSrc} alt="profile" className="h-7 " />
+        <img
+          src={user.image ? user.image : profileImgSrc}
+          alt="profile"
+          className="h-7 "
+        />
       </div>
       {isProfileDetailOpen && <NavProfileDetail />}
     </div>

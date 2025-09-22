@@ -15,7 +15,7 @@ function DirectTeamDetails() {
   const { item } = location.state;
 
   useEffect(() => {
-   //  console.log({ item });
+    //  console.log({ item });
     const fetchUserData = async () => {
       setScreenLoading(true);
       if (user && isConnected) {
@@ -50,7 +50,8 @@ function DirectTeamDetails() {
       <div className="flex justify-between items-center">
         <div className="text-lg font-semibold">Direct Team Details</div>
         <div className="text-xs">
-          <span className="text-green-300">Network</span> {">>"} Level Network
+          <span className="text-green-300">Network</span> {">>"} Direct Team
+          Details
         </div>
       </div>
       <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
@@ -60,7 +61,7 @@ function DirectTeamDetails() {
 
         <div className="overflow-x-auto mt-4 w-full max-w-full">
           <table className="table w-full text-xs ">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th className="text-center">Level</th>
                 <th className="text-center">Total User</th>
@@ -71,7 +72,7 @@ function DirectTeamDetails() {
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center">
+                  <td colSpan={4} className="text-center">
                     No Data Found
                   </td>
                 </tr>

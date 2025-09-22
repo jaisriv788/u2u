@@ -189,9 +189,9 @@ function TeamNetwork() {
           </div>
         </div>
 
-        <div className="overflow-x-auto mt-4 w-full max-w-full ">
+        <div className="overflow-x-auto mt-4 w-full max-w-full h-114">
           <table className="table w-full text-xs">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th>#</th>
                 <th>Referral ID</th>
@@ -206,7 +206,7 @@ function TeamNetwork() {
             <tbody>
               {currentRows.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-4">
+                  <td colSpan={8} className="text-center py-4">
                     No Data Found
                   </td>
                 </tr>

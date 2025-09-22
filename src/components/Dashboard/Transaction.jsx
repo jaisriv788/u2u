@@ -4,14 +4,16 @@ import useDashboardStore from "../../store/dashboardStore";
 function Transaction() {
   const { dashboardData } = useDashboardStore();
 
+  // console.log("transation")
+
   return (
-    <div className="rounded-lg overflow-hidden">
+    <div className="rounded-lg">
       <div className="flex gap-3 items-center bg-gradient-to-br from-[#0F0F1D] via-[#102031] to-[#24BB79] p-3 text-lg font-semibold">
         <TfiReload /> Transaction History
       </div>
       <div className="flex gap-3 pb-50 items-center bg-gradient-to-br from-[#0F0F1D] via-[#102031] to-[#24BB79] p-3 text-lg font-semibold">
         <div className="overflow-x-auto w-full rounded-box border border-base-content/5 bg-[#1F2C24]">
-          <table className="table">
+          <table className="table w-full">
             <thead className="text-white">
               <tr>
                 <th>Transaction Id</th>
@@ -51,3 +53,5 @@ function Transaction() {
 }
 
 export default Transaction;
+
+

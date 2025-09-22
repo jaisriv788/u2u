@@ -195,9 +195,9 @@ function MyDirect() {
         </div>
 
         {/* ✅ Constrain the wrapper so it never grows wider than the screen */}
-        <div className="overflow-x-auto w-full max-w-full mt-4">
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-114">
           <table className="table w-full text-xs">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th>#</th>
                 <th>User ID</th>
@@ -224,7 +224,7 @@ function MyDirect() {
                           : "bg-[#1F2C24]"
                       }
                     >
-                      <td className="flex gap-2 items-center">
+                      <td className="flex gap-2 items-center text-nowrap">
                         <button
                           onClick={() => toggleExpand(startIdx + index)}
                           className={`w-5 h-5 cursor-pointer flex items-center justify-center rounded-full text-white font-semibold transition-transform duration-300 transform ${
@@ -235,7 +235,7 @@ function MyDirect() {
                         >
                           +
                         </button>
-                        <span className="font-medium text-gray-100">
+                        <span className="font-medium text-gray-100 text-nowrap">
                           {startIdx + index + 1}
                         </span>
                       </td>
@@ -243,19 +243,19 @@ function MyDirect() {
                         onClick={() =>
                           navigate("/directteamdetails", { state: { item } })
                         }
-                        className="text-[#9DE0B6] cursor-pointer"
+                        className="text-[#9DE0B6] cursor-pointer text-nowrap"
                       >
                         {item.username}
                       </td>
 
                       <td className="text-nowrap">{item.first_name}</td>
-                      <td>{item.phone_no}</td>
-                      <td>{item.email}</td>
+                      <td className="text-nowrap">{item.phone_no}</td>
+                      <td className="text-nowrap">{item.email}</td>
                       <td
                         onClick={() =>
                           navigate("/mydirectteam", { state: { item } })
                         }
-                        className="text-[#58C4BB] cursor-pointer"
+                        className="text-[#58C4BB] cursor-pointer text-nowrap"
                       >
                         {item.username}
                       </td>

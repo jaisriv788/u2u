@@ -127,12 +127,12 @@ function MyDirectTeam() {
 
   return (
     <div className="flex-1 flex flex-col p-4 overflow-x-hidden">
-      <div className="flex justify-between items-center">
+      {/* <div className="flex justify-between items-center">
         <div className="text-lg font-semibold">Team Network</div>
         <div className="text-xs">
           <span className="text-green-300">Network</span> {">>"} Team Network
         </div>
-      </div>
+      </div> */}
 
       <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
         <div className="font-semibold border-b border-gray-500 pb-3">
@@ -196,9 +196,9 @@ function MyDirectTeam() {
           </div>
         </div>
 
-        <div className="overflow-x-auto mt-4 w-full max-w-full ">
+        <div className="overflow-x-auto mt-4 w-full max-w-full h-114">
           <table className="table w-full text-xs">
-            <thead>
+            <thead className="text-gray-300">
               <tr>
                 <th>#</th>
                 <th>User ID</th>
