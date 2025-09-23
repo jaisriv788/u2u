@@ -47,7 +47,7 @@ function Message({ refresh, setRefresh }) {
         setRefresh(!refresh);
       }
     } catch (err) {
-      alert(err);
+      console.log(err);
     }
   }
 

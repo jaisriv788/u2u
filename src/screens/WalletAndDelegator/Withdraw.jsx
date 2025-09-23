@@ -20,6 +20,10 @@ function Withdraw() {
   const [disableSubmit, setDisableSubmit] = useState(false);
 
   async function handleSubmit() {
+    if (receivedOtp == "" || otp == "") {
+      alert("Invalid Otp!");
+      return;
+    }
     if (receivedOtp == otp) {
       try {
         setDisableSubmit(true);
@@ -105,7 +109,7 @@ function Withdraw() {
           </div>
 
           <div className="flex flex-col">
-            <span className="">Country</span>
+            <span className="">Payment Mode</span>
             <select
               value={option}
               onChange={(e) => setOption(e.target.value)}
@@ -157,7 +161,12 @@ function Withdraw() {
               {disableSubmit ? "Withdrawing..." : "Submit"}
             </button>
             <button
-              onClick={() => {}}
+              onClick={() => {
+                setAmount("");
+                setCurrentPassword("");
+                setOtp("");
+                setReceivedOtp("");
+              }}
               className="bg-gray-500 hover:bg-gray-400 transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
             >
               Cancel
