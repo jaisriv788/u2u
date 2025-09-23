@@ -195,7 +195,7 @@ function MyDirect() {
         </div>
 
         {/* ✅ Constrain the wrapper so it never grows wider than the screen */}
-        <div className="overflow-x-auto w-full max-w-full mt-4 h-118">
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-128">
           <table className="table w-full text-xs">
             <thead className="text-gray-300">
               <tr>
@@ -303,7 +303,7 @@ function MyDirect() {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 py-1 cursor-pointer bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Prev
             </button>
@@ -316,7 +316,7 @@ function MyDirect() {
                 <button
                   key={p}
                   onClick={() => setCurrentPage(p)}
-                  className={`px-2 py-1 rounded ${
+                  className={`px-2 cursor-pointer py-1 rounded ${
                     currentPage === p
                       ? "bg-green-400 text-white"
                       : "bg-[#26362C] text-gray-200 hover:bg-[#1F2C24]"
@@ -329,7 +329,7 @@ function MyDirect() {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 cursor-pointer py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Next
             </button>

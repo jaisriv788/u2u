@@ -220,7 +220,7 @@ function Tickets({ refresh }) {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 cursor-pointer py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Prev
             </button>
@@ -233,7 +233,7 @@ function Tickets({ refresh }) {
                 <button
                   key={p}
                   onClick={() => setCurrentPage(p)}
-                  className={`px-2 py-1 rounded ${
+                  className={`px-2 cursor-pointer py-1 rounded ${
                     currentPage === p
                       ? "bg-green-400 text-white"
                       : "bg-[#26362C] text-gray-200 hover:bg-[#1F2C24]"
@@ -246,7 +246,7 @@ function Tickets({ refresh }) {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 cursor-pointer py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Next
             </button>
