@@ -13,7 +13,7 @@ const Category = [
 
 const Priority = ["Normal", "Medium", "High"];
 
-function Message() {
+function Message({ refresh, setRefresh }) {
   const { baseUrl } = useConstStore();
   const { user, token } = useUserStore();
 
@@ -44,6 +44,7 @@ function Message() {
         setSupportCategory("ACTIVATION");
         setSupportPriority("Normal");
         alert("Ticket Raised Successfully");
+        setRefresh(!refresh);
       }
     } catch (err) {
       alert(err);

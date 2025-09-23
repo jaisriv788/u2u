@@ -10,7 +10,7 @@ import useDashboardStore from "../../store/dashboardStore";
 function SideBar() {
   const [activeItemId, setActiveItemId] = useState(null);
 
-  const { setDashBoardData } = useDashboardStore();
+  const { resetDashBoard } = useDashboardStore();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,7 +28,7 @@ function SideBar() {
   }, [location.pathname]);
 
   const { setIsSidebarOpen } = useModalStore();
-  const { setUser, setIsConnected } = useUserStore();
+  const { resetUser } = useUserStore();
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -51,9 +51,8 @@ function SideBar() {
               setActiveItemId((prev) => (prev === data.id ? null : data.id));
             }
             if (data.signout) {
-              setUser(null);
-              setIsConnected(false);
-              setDashBoardData(null);
+              resetDashBoard();
+              resetUser();
             }
           };
 

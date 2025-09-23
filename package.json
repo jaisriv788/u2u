@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "apexcharts": "^5.3.5",
     "axios": "^1.11.0",
+    "date-fns": "^4.1.0",
     "motion": "^12.23.12",
     "react": "^19.1.1",
     "react-apexcharts": "^1.7.0",

@@ -7,6 +7,10 @@ const useDashboardStore = create(
       (set) => ({
         dashboardData: null,
         setDashBoardData: (dashboardData) => set({ dashboardData }),
+        resetDashBoard: () =>
+          set({
+            dashboardData: null,
+          }),
       }),
       {
         name: "dashboard-storage",

@@ -18,9 +18,9 @@ function Profile() {
   const [countries, setCountries] = useState(null);
   const [country, setCountry] = useState(user?.country || "");
   const [image, setImage] = useState(null);
+  const [receivedOtp, setReceivedOtp] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [receivedOtp, setReceivedOtp] = useState("");
 
   async function handleOtp() {
     try {
@@ -90,6 +90,8 @@ function Profile() {
       } catch (error) {
         console.error(error);
       }
+    } else {
+      alert("Otp does not match");
     }
   }
 
