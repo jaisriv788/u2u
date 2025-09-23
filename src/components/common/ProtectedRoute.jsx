@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import useUserStore from "../../store/userStore";
 import useModalStore from "../../store/modalStore";
 import Navbar from "./Navbar";
@@ -9,6 +9,10 @@ function ProtectedRoute() {
   const { isConnected } = useUserStore();
   const { isSidebarOpen, setIsSidebarOpen } = useModalStore();
 
+  const location = useLocation();
+
+  const isInvoice = location.pathname === "/invoice";
+
   useEffect(() => {
     const screenWidth = window.innerWidth;
     setIsSidebarOpen(screenWidth >= 1024);
@@ -16,9 +20,9 @@ function ProtectedRoute() {
 
   return isConnected ? (
     <div className="flex flex-col h-screen bg-black text-white">
-      <Navbar />
+      {!isInvoice && <Navbar />}
       <div className="flex flex-1 overflow-hidden relative">
-        {isSidebarOpen && <SideBar />}
+        {!isInvoice && isSidebarOpen && <SideBar />}
         <div className="flex-1 flex overflow-y-auto overflow-x-hidden">
           <Outlet />
         </div>

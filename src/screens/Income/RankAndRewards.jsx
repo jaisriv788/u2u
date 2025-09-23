@@ -122,7 +122,7 @@ function RankAndRewards() {
       <div className="flex justify-between items-center">
         <div className="text-lg font-semibold">Rank Reward</div>
         <div className="text-xs">
-          <span className="text-green-300">Income</span> {">>"} Rank Reward
+          <span className="text-green-300">Report</span> {">>"} Rank Reward
         </div>
       </div>
       <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
@@ -189,7 +189,7 @@ function RankAndRewards() {
         </div>
 
         {/* ✅ Constrain the wrapper so it never grows wider than the screen */}
-        <div className="overflow-x-auto w-full max-w-full mt-4 h-114">
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-118">
           <table className="table w-full text-xs">
             <thead className="text-gray-300">
               <tr>

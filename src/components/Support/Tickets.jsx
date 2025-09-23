@@ -128,7 +128,7 @@ function Tickets({ refresh }) {
           </div>
         </div>
 
-        <div className="overflow-x-auto w-full max-w-full mt-4 h-114">
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-118">
           <table className="table w-full text-xs ">
             <thead className="text-gray-300">
               <tr>

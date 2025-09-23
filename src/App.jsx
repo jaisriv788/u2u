@@ -13,6 +13,7 @@ import Support from "./screens/Support";
 import ForgetPassword from "./screens/ForgetPassword";
 import ResetPassword from "./screens/ResetPassword";
 import Chat from "./components/Support/Chat";
+import Invoice from "./components/common/Invoice";
 
 //authentication screens
 import Profile from "./screens/Authentication/Profile";
@@ -77,6 +78,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/support" element={<Support />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/invoice" element={<Invoice />} />
 
           {/*authentication route*/}
           <Route path="/profile" element={<Profile />} />
