@@ -6,11 +6,13 @@ import { motion, AnimatePresence } from "motion/react";
 import useUserStore from "../../store/userStore";
 import useModalStore from "../../store/modalStore";
 import useDashboardStore from "../../store/dashboardStore";
+import useConstStore from "../../store/constStore";
 
 function SideBar() {
   const [activeItemId, setActiveItemId] = useState(null);
 
   const { resetDashBoard } = useDashboardStore();
+  const { setWalletAddress } = useConstStore();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -53,6 +55,7 @@ function SideBar() {
             if (data.signout) {
               resetDashBoard();
               resetUser();
+              setWalletAddress(null);
             }
           };
 

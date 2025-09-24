@@ -1,26 +1,185 @@
-import { useState } from "react";
-// import axios from "axios";
-// import useConstStore from "../../store/constStore";
-// import useUserStore from "../../store/userStore";
-// import useDashboardStore from "../../store/dashboardStore";
+import { useEffect, useState } from "react";
+import useConstStore from "../../store/constStore";
+import useUserStore from "../../store/userStore";
+import Web3 from "web3";
+import erc20Abi from "../../erc20Abi.json";
+import contractAbi from "../../contractAbi.json";
+import axios from "axios";
 
 function DepositeFund() {
-  // const { baseUrl } = useConstStore();
-  // const { user, token } = useUserStore();
-  // const { dashboardData } = useDashboardStore();
+  const options = ["USDT-BEP20"];
 
-  const options = ["USDT"];
-
-  const [option, setOption] = useState("USDT");
+  const [option, setOption] = useState("USDT-BEP20");
   const [amount, setAmount] = useState("");
   const [disableSubmit, setDisableSubmit] = useState(false);
 
-  async function handleSubmit() {
+  const {
+    baseUrl,
+    usdtAddress,
+    contractAddress,
+    walletAddress,
+    setWalletAddress,
+  } = useConstStore();
+
+  const { user, token } = useUserStore();
+
+  useEffect(() => {
+    const connectWallet = async () => {
+      if (!window.ethereum) {
+        alert("Please install MetaMask!");
+        return;
+      }
+
+      try {
+        let accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+
+        if (accounts.length === 0) {
+          accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+        }
+
+        setWalletAddress(accounts[0]);
+
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x38",
+              chainName: "Binance Smart Chain",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "BNB",
+                decimals: 18,
+              },
+              rpcUrls: ["https://bsc-dataseed.binance.org/"],
+              blockExplorerUrls: ["https://bscscan.com/"],
+            },
+          ],
+        });
+
+        window.ethereum.on("accountsChanged", (acc) => {
+          setWalletAddress(acc[0] || null);
+        });
+      } catch (err) {
+        if (err.code === -32002) {
+          console.error(
+            "MetaMask request already pending. Please open MetaMask."
+          );
+        } else {
+          console.error("Wallet connection failed:", err);
+          alert("Wallet Connection Failed.");
+        }
+      }
+    };
+
+    connectWallet();
+  }, []);
+
+  async function connectWallet() {
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
+
     try {
       setDisableSubmit(true);
-      console.log({ option, amount });
-    } catch (error) {
-      console.log(error);
+
+      let accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+
+      if (accounts.length === 0) {
+        accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+      }
+
+      setWalletAddress(accounts[0]);
+
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x38",
+            chainName: "Binance Smart Chain",
+            nativeCurrency: {
+              name: "BNB",
+              symbol: "BNB",
+              decimals: 18,
+            },
+            rpcUrls: ["https://bsc-dataseed.binance.org/"],
+            blockExplorerUrls: ["https://bscscan.com/"],
+          },
+        ],
+      });
+
+      window.ethereum.on("accountsChanged", (acc) => {
+        setWalletAddress(acc[0] || null);
+      });
+    } catch (err) {
+      if (err.code === -32002) {
+        console.error(
+          "MetaMask request already pending. Please open MetaMask."
+        );
+      } else {
+        console.error("Wallet connection failed:", err);
+        alert("Wallet Connection Failed.");
+      }
+    } finally {
+      setDisableSubmit(false);
+    }
+  }
+
+  async function handleSubmit() {
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
+    try {
+      setDisableSubmit(true);
+
+      const web3 = new Web3(window.ethereum);
+
+      const amountInWei = web3.utils.toWei(amount.toString(), "ether");
+
+      const usdt = new web3.eth.Contract(erc20Abi, usdtAddress);
+
+      await usdt.methods
+        .approve(contractAddress, amountInWei.toString())
+        .send({ from: walletAddress });
+
+      const contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+      const receipt = await contract.methods
+        .deposit(amountInWei)
+        .send({ from: walletAddress });
+
+      console.log("Deposit confirmed ✅", receipt);
+
+      await axios.post(
+        `${baseUrl}depositUsdtFund`,
+        {
+          user_id: user?.id,
+          amount,
+          method: option,
+          transaction_id: receipt.transactionHash,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("API updated successfully");
+      alert("Transaction confirmed ✅");
+    } catch (err) {
+      console.error("Transaction failed!", err);
+      alert("Tranaction Failed!");
     } finally {
       setDisableSubmit(false);
     }
@@ -61,19 +220,23 @@ function DepositeFund() {
           </div>
 
           <div className="flex gap-5 mt-5">
-            <button
-              onClick={handleSubmit}
-              disabled={disableSubmit}
-              className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
-            >
-              {disableSubmit ? "Withdrawing..." : "Submit"}
-            </button>
-            <button
-              onClick={() => {}}
-              className="bg-gray-500 hover:bg-gray-400 transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
-            >
-              Cancel
-            </button>
+            {walletAddress ? (
+              <button
+                onClick={handleSubmit}
+                disabled={disableSubmit}
+                className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+              >
+                {disableSubmit ? "Depositing..." : "Submit"}
+              </button>
+            ) : (
+              <button
+                onClick={connectWallet}
+                disabled={disableSubmit}
+                className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+              >
+                {disableSubmit ? "Connecting..." : "Connect Wallet"}
+              </button>
+            )}
           </div>
         </div>
       </div>

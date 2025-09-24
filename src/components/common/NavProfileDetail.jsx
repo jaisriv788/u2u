@@ -10,7 +10,7 @@ import useConstStore from "../../store/constStore";
 function NavProfileDetail() {
   const { user, token, resetUser } = useUserStore();
   const { dashboardData, resetDashBoard } = useDashboardStore();
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setWalletAddress } = useConstStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +64,7 @@ function NavProfileDetail() {
         onClick={() => {
           resetDashBoard();
           resetUser();
+          setWalletAddress(null);
         }}
         className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300"
       >
