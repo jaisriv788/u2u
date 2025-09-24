@@ -19,6 +19,7 @@ import BuyPackage from "./screens/Delegator/BuyPackage";
 //authentication screens
 import Profile from "./screens/Authentication/Profile";
 import LoginPassword from "./screens/Authentication/LoginPassword";
+import TwoFA from "./screens/TwoFA";
 
 //network screens
 import MyDirect from "./screens/Network/MyDirect";
@@ -126,6 +127,7 @@ function App() {
           {/*authentication route*/}
           <Route path="/profile" element={<Profile />} />
           <Route path="/loginpassword" element={<LoginPassword />} />
+          <Route path="/twofa" element={<TwoFA />} />
 
           {/*network route*/}
           <Route path="/mydirect" element={<MyDirect />} />

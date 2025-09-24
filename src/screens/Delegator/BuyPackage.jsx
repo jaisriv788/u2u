@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import useConstStore from "../../store/constStore";
 import useUserStore from "../../store/userStore";
+import { useNavigate } from "react-router";
 
 function BuyPackage() {
   const location = useLocation();
@@ -12,6 +13,7 @@ function BuyPackage() {
   //   console.log(selectedPackage);
   const { baseUrl } = useConstStore();
   const { user, token } = useUserStore();
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -129,7 +131,10 @@ function BuyPackage() {
               </h3>
               <div className="flex justify-center gap-4 mt-4 flex-wrap">
                 <button
-                  onClick={() => setIsModal2Open(false)}
+                  onClick={() => {
+                    setIsModal2Open(false);
+                    navigate("/delegatorppactivation");
+                  }}
                   className="bg-emerald-500 cursor-pointer hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl transition-colors"
                 >
                   Ok

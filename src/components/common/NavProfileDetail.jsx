@@ -6,11 +6,15 @@ import useDashboardStore from "../../store/dashboardStore";
 import axios from "axios";
 import { useEffect } from "react";
 import useConstStore from "../../store/constStore";
+import { MdOutlineSecurity } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 function NavProfileDetail() {
   const { user, token, resetUser } = useUserStore();
   const { dashboardData, resetDashBoard } = useDashboardStore();
   const { baseUrl, setWalletAddress } = useConstStore();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +59,15 @@ function NavProfileDetail() {
             Delegator Amount ${dashboardData.total_investment} / [Rank:{" "}
             {user.rank_name}]
           </div>
+        </div>
+      </div>
+
+      <div className="h-[1px] bg-[#4f5e54] my-1"></div>
+
+      <div onClick={() => navigate("/twofa")} className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300">
+        <MdOutlineSecurity className="bg-[#4f5e54] p-1 text-2xl rounded-full" />
+        <div className="text-xs font-semibold ">
+          <div>Two Factor Authentication</div>
         </div>
       </div>
 

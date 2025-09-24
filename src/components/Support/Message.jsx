@@ -22,6 +22,10 @@ function Message({ refresh, setRefresh }) {
   const [supportPriority, setSupportPriority] = useState("Normal");
 
   async function handleSumbit() {
+    if (msg == "") {
+      alert("Enter Message To Raise Ticket.");
+      return;
+    }
     try {
       const response = await axios.post(
         `${baseUrl}store_ticket`,

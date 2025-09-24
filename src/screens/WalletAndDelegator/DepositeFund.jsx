@@ -134,6 +134,10 @@ function DepositeFund() {
   }
 
   async function handleSubmit() {
+    if (amount == 0 || amount == "") {
+      alert("Amount Can Not Be Zero.");
+      return;
+    }
     if (!window.ethereum) {
       alert("Please install MetaMask!");
       return;

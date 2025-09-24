@@ -21,6 +21,7 @@ function Chat() {
   const { baseUrl, setScreenLoading } = useConstStore();
 
   useEffect(() => {
+    
     firstLoad && setScreenLoading(true);
     const fetchChatData = async () => {
       try {
@@ -56,6 +57,10 @@ function Chat() {
   }, [chats]);
 
   async function handleSubmitMsg() {
+    if (msg == "") {
+      alert("Message Can Not Be Empty.");
+      return;
+    }
     try {
       if (isConnected && user) {
         const response = await axios.post(
