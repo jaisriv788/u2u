@@ -15,7 +15,7 @@ function DirectBonus() {
   const { baseUrl, setScreenLoading } = useConstStore();
 
   useEffect(() => {
-    console.log(user?.id);
+    // console.log(user?.id);
     setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {

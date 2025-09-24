@@ -21,7 +21,7 @@ function AmountDetail() {
   const { item } = location.state;
 
   useEffect(() => {
-    console.log({ itemHere: item });
+    // console.log({ itemHere: item });
     setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {
@@ -40,7 +40,7 @@ function AmountDetail() {
               },
             }
           );
-          console.log(response.data.data);
+          // console.log(response.data.data);
           if (response.data.status === 200) {
             setData(response.data.data);
             setFilteredData(response.data.data);
@@ -260,7 +260,7 @@ function AmountDetail() {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 py-1 cursor-pointer bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Prev
             </button>
@@ -273,7 +273,7 @@ function AmountDetail() {
                 <button
                   key={p}
                   onClick={() => setCurrentPage(p)}
-                  className={`px-2 py-1 rounded ${
+                  className={`px-2 py-1 cursor-pointer rounded ${
                     currentPage === p
                       ? "bg-green-400 text-white"
                       : "bg-[#26362C] text-gray-200 hover:bg-[#1F2C24]"
@@ -286,7 +286,7 @@ function AmountDetail() {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-2 py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 py-1 bg-[#26362C] cursor-pointer rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Next
             </button>

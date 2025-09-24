@@ -27,7 +27,7 @@ function DelegatorPPActivation() {
             },
           }
         );
-        console.log(response.data.data);
+        // console.log(response.data.data);
         if (response.data.status === 200) {
           setData(response.data.data);
         }

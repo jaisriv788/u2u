@@ -19,14 +19,35 @@ function DepositeFund() {
     contractAddress,
     walletAddress,
     setWalletAddress,
+    setMsg,
+    setShowError,
+    setShowSuccess,
   } = useConstStore();
 
   const { user, token } = useUserStore();
 
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
+
   useEffect(() => {
     const connectWallet = async () => {
       if (!window.ethereum) {
-        alert("Please install MetaMask!");
+        showError("Please install MetaMask!");
         return;
       }
 
@@ -70,7 +91,7 @@ function DepositeFund() {
           );
         } else {
           console.error("Wallet connection failed:", err);
-          alert("Wallet Connection Failed.");
+          showError("Wallet Connection Failed.");
         }
       }
     };
@@ -80,7 +101,7 @@ function DepositeFund() {
 
   async function connectWallet() {
     if (!window.ethereum) {
-      alert("Please install MetaMask!");
+      showError("Please install MetaMask!");
       return;
     }
 
@@ -126,7 +147,7 @@ function DepositeFund() {
         );
       } else {
         console.error("Wallet connection failed:", err);
-        alert("Wallet Connection Failed.");
+        showError("Wallet Connection Failed.");
       }
     } finally {
       setDisableSubmit(false);
@@ -135,11 +156,11 @@ function DepositeFund() {
 
   async function handleSubmit() {
     if (amount == 0 || amount == "") {
-      alert("Amount Can Not Be Zero.");
+      showError("Amount Can Not Be Zero.");
       return;
     }
     if (!window.ethereum) {
-      alert("Please install MetaMask!");
+      showError("Please install MetaMask!");
       return;
     }
     try {
@@ -180,10 +201,10 @@ function DepositeFund() {
       );
 
       console.log("API updated successfully");
-      alert("Transaction confirmed ✅");
+      showSuccess("Transaction confirmed ✅");
     } catch (err) {
       console.error("Transaction failed!", err);
-      alert("Tranaction Failed!");
+      showError("Tranaction Failed!");
     } finally {
       setDisableSubmit(false);
     }

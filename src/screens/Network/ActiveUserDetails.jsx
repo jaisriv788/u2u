@@ -16,7 +16,7 @@ function ActiveUserDetails() {
   const { item } = location.state;
 
   useEffect(() => {
-    console.log({ item });
+    // console.log({ item });
     const fetchUserData = async () => {
       setScreenLoading(true);
       if (user && isConnected) {

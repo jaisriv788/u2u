@@ -20,6 +20,7 @@ function Message({ refresh, setRefresh }) {
   const [msg, setMsg] = useState("");
   const [supportCategory, setSupportCategory] = useState("ACTIVATION");
   const [supportPriority, setSupportPriority] = useState("Normal");
+  const [loading, setLoading] = useState(false);
 
   async function handleSumbit() {
     if (msg == "") {
@@ -27,6 +28,8 @@ function Message({ refresh, setRefresh }) {
       return;
     }
     try {
+      setLoading(true);
+
       const response = await axios.post(
         `${baseUrl}store_ticket`,
         {
@@ -52,6 +55,8 @@ function Message({ refresh, setRefresh }) {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -105,9 +110,10 @@ function Message({ refresh, setRefresh }) {
         <div className="flex gap-5 mt-5">
           <button
             onClick={handleSumbit}
+            disabled={loading}
             className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
           >
-            Submit
+            {loading ? "Sending..." : "Submit"}
           </button>
         </div>
       </div>

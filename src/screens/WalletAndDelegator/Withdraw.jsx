@@ -5,7 +5,7 @@ import useUserStore from "../../store/userStore";
 import useDashboardStore from "../../store/dashboardStore";
 
 function Withdraw() {
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setMsg, setShowError, setShowSuccess } = useConstStore();
   const { user, token } = useUserStore();
   const { dashboardData } = useDashboardStore();
 
@@ -19,9 +19,27 @@ function Withdraw() {
   const [disableOtp, setDisableOtp] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
 
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
+
   async function handleSubmit() {
     if (receivedOtp == "" || otp == "") {
-      alert("Invalid Otp!");
+      showError("Invalid Otp!");
       return;
     }
     if (receivedOtp == otp) {
@@ -42,15 +60,16 @@ function Withdraw() {
             },
           }
         );
-
+        showSuccess("Withdraw Request Sent.");
         console.log(response.data);
       } catch (error) {
         console.log(error);
+        showError("Something Went Wrong While Sending The Request.");
       } finally {
         setDisableSubmit(false);
       }
     } else {
-      alert("Otp does not match");
+      showError("Otp does not match");
     }
   }
 
@@ -70,7 +89,7 @@ function Withdraw() {
         }
       );
       console.log(response.data.data.otp);
-      alert(`Otp sent to your registered email: ${user?.email}`);
+      showSuccess(`Otp sent to your registered email: ${user?.email}`);
 
       setReceivedOtp(response.data.data.otp);
     } catch (error) {

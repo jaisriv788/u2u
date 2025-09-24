@@ -16,12 +16,12 @@ function Chat() {
   const [msg, setMsg] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
 
   useEffect(() => {
-    
     firstLoad && setScreenLoading(true);
     const fetchChatData = async () => {
       try {
@@ -63,6 +63,7 @@ function Chat() {
     }
     try {
       if (isConnected && user) {
+        setLoading(true);
         const response = await axios.post(
           `${baseUrl}ticket_reply_store`,
           { ticket: item?.ticket, comment: msg },
@@ -80,6 +81,8 @@ function Chat() {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -153,9 +156,10 @@ function Chat() {
           />
           <button
             onClick={handleSubmitMsg}
+            disabled={loading}
             className="bg-[#38C66C] hover:bg-[#56CF82] transition ease-in-out duration-300 tex-white rounded w-fit px-5 cursor-pointer mt-2"
           >
-            Submit
+            {loading ? "Sending..." : "Submit"}
           </button>
         </div>
       </div>
