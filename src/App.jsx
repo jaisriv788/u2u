@@ -67,7 +67,7 @@ function App() {
       {showError && (
         <div
           role="alert"
-          className="alert alert-error absolute z-50 right-0 top-2 font-bold text-white"
+          className="alert alert-error absolute z-50 right-2 top-2 font-bold text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ function App() {
       {showSuccess && (
         <div
           role="alert"
-          className="alert alert-success absolute z-50 right-0 top-2"
+          className="alert alert-success absolute z-50 right-2 top-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -10,7 +10,8 @@ import useConstStore from "../../store/constStore";
 
 function Profile() {
   const { user, setUser, token } = useUserStore();
-  const { baseUrl, setScreenLoading } = useConstStore();
+  const { baseUrl, setScreenLoading, setMsg, setShowError, setShowSuccess } =
+    useConstStore();
 
   const [name, setName] = useState(user?.first_name);
   const [address, setAddress] = useState(user?.wallet_address);
@@ -21,9 +22,29 @@ function Profile() {
   const [receivedOtp, setReceivedOtp] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sendingOtp, setSendingOtp] = useState(false);
+
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
 
   async function handleOtp() {
     try {
+      setSendingOtp(true);
       const response = await axios.post(
         `${baseUrl}sendOtp`,
         {
@@ -39,8 +60,11 @@ function Profile() {
       // console.log(response.data.data.otp);
 
       setReceivedOtp(response.data.data.otp);
+      showSuccess("OTP Sent To Your Mail.");
     } catch (error) {
       console.error(error);
+    } finally {
+      setSendingOtp(false);
     }
   }
 
@@ -83,15 +107,18 @@ function Profile() {
             setOtp("");
             setImage(null);
             setReceivedOtp("");
+            showSuccess("Profile Updated.")();
           }
           setUser(res.data.data.user);
           setLoading(false);
         }
       } catch (error) {
-        console.error(error);
+        setLoading(false);
+        console.log(error.response.data.msg);
+        showError(error.response.data.msg);
       }
     } else {
-      alert("Otp does not match");
+      showError("Otp does not match");
     }
   }
 
@@ -259,18 +286,23 @@ function Profile() {
               />
               <button
                 onClick={handleOtp}
+                disabled={sendingOtp || loading}
                 className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                Send Otp
+                {sendingOtp ? "Sending OTP..." : loading ? "Please Wait.." : "Send OTP"}
               </button>
             </div>
             <div className="flex gap-5 mt-5">
               <button
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || sendingOtp}
                 className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                {loading ? "Loading..." : "Submit"}
+                {loading
+                  ? "Loading..."
+                  : sendingOtp
+                  ? "Please Wait.."
+                  : "Submit"}
               </button>
               <button
                 onClick={() => {

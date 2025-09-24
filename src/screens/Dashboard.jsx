@@ -3,7 +3,7 @@ import useUserStore from "../store/userStore";
 import useConstStore from "../store/constStore";
 import useDashboardStore from "../store/dashboardStore";
 import axios from "axios";
-import Marquee from "../components/Dashboard/Marquee";
+// import Marquee from "../components/Dashboard/Marquee";
 import Intro from "../components/Dashboard/Intro";
 import Card from "../components/Dashboard/Card";
 import { FaWallet } from "react-icons/fa";

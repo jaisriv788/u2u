@@ -11,11 +11,31 @@ function LoginPassword() {
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setMsg, setShowError, setShowSuccess } = useConstStore();
   const { user, token } = useUserStore();
 
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
+
   async function handleSubmit() {
+    setLoading(true);
     try {
       const response = await axios.post(
         `${baseUrl}updatePassword`,
@@ -37,15 +57,17 @@ function LoginPassword() {
         setCurrentPassword("");
         setNewPassword("");
         setConfirmNewPassword("");
-        alert("Password updated successfully");
+        showSuccess("Password updated successfully");
       }
     } catch (error) {
-      console.log(error);
+      showError(error.response.data.msg);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-   <div className="flex-1 flex justify-center p-4">
+    <div className="flex-1 flex justify-center p-4">
       <div className="bg-[#1F2C24] mt-5 rounded-lg w-full sm:w-10/12 md:w-9/12 h-fit">
         <div className="text-lg font-semibold border-b py-3 px-5 border-[#35443b]">
           Change Password
@@ -115,9 +137,10 @@ function LoginPassword() {
           <div className="flex gap-5 mt-5">
             <button
               onClick={handleSubmit}
+              disabled={loading}
               className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
             >
-              Submit
+              {loading ? "Resetting Password..." : "Submit"}
             </button>
             <button
               onClick={() => {
@@ -125,6 +148,7 @@ function LoginPassword() {
                 setCurrentPassword("");
                 setConfirmNewPassword("");
               }}
+              disabled={loading}
               className="bg-gray-500 hover:bg-gray-400 transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
             >
               Cancel
