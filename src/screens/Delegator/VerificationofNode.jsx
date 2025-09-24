@@ -20,7 +20,8 @@ function PromoPackHistory() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  const { user, isConnected, token } = useUserStore();
+  const { user, isConnected, token, setMsg, setShowError, setShowSuccess } =
+    useUserStore();
   const {
     baseUrl,
     usdtAddress,
@@ -30,10 +31,28 @@ function PromoPackHistory() {
     setWalletAddress,
   } = useConstStore();
 
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
+
   useEffect(() => {
     const connectWallet = async () => {
       if (!window.ethereum) {
-        alert("Please install MetaMask!");
+        showError("Please install MetaMask!");
         return;
       }
 
@@ -77,7 +96,7 @@ function PromoPackHistory() {
           );
         } else {
           console.error("Wallet connection failed:", err);
-          alert("Wallet Connection Failed.");
+          showError("Wallet Connection Failed.");
         }
       }
     };
@@ -176,12 +195,12 @@ function PromoPackHistory() {
       console.log(selectedItem);
 
       if (response1.data.status != 200) {
-        alert("Transaction Failed. No CheckPin Available!");
+        showError("Transaction Failed. No CheckPin Available!");
         return;
       }
 
       if (!window.ethereum) {
-        alert("Please install MetaMask!");
+        showError("Please install MetaMask!");
         return;
       }
 
@@ -235,7 +254,7 @@ function PromoPackHistory() {
       );
       setRefresh(!refresh);
       setSelectedItem(null);
-      alert("Transaction Complete!");
+      showSuccess("Transaction Complete!");
     } catch (e) {
       console.log(e);
     }

@@ -7,7 +7,7 @@ import useConstStore from "../../store/constStore";
 
 function Delegate() {
   const { user, token } = useUserStore();
-  const { baseUrl, setScreenLoading } = useConstStore();
+  const { baseUrl, setScreenLoading, setMsg, setShowError, setShowSuccess  } = useConstStore();
 
   const [balance, setBalance] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -18,6 +18,24 @@ function Delegate() {
   const [remark, setRemark] = useState("");
   const [password, setPassword] = useState("");
   const [refreshed, setRefreshed] = useState(false);
+
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
 
   async function handleSubmit() {
     try {
@@ -47,10 +65,10 @@ function Delegate() {
         setRemark("");
         setPassword("");
         setRefreshed(!refreshed);
-        alert("Activation Successfull");
+        showSuccess("Activation Successfull");
       }
     } catch (err) {
-      alert(err);
+      showError(err);
     }
   }
 
