@@ -7,6 +7,8 @@ function Signup() {
   const { referralId: referralIdParam } = useParams();
   const [referralLocked, setReferralLocked] = useState(false);
   const [referralId, setReferralId] = useState("");
+
+  const [debouncedReferralId, setDebouncedReferralId] = useState(referralId);
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [country, setCountry] = useState("");
@@ -19,10 +21,36 @@ function Signup() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userFound, setUserFound] = useState(false);
 
   const { baseUrl } = useConstStore();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedReferralId(referralId);
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [referralId]);
+
+  async function fetchUser() {
+    const res = await axios.post(`${baseUrl}getuser`, {
+      username: debouncedReferralId,
+    });
+
+    if (res.data.status == 200) {
+      setUserFound(true);
+    } else {
+      setUserFound(false);
+    }
+  }
+  useEffect(() => {
+    if (debouncedReferralId) {
+      fetchUser();
+    }
+  }, [debouncedReferralId]);
 
   useEffect(() => {
     if (referralIdParam) {
@@ -105,16 +133,21 @@ function Signup() {
             information by email address and password.
           </div>
         </div>
+        <span>hi</span>
         <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Referral Id"
-            value={referralId}
-            required
-            disabled={referralLocked}
-            onChange={(e) => setReferralId(e.target.value)}
-            className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Referral Id"
+              value={referralId}
+              required
+              disabled={referralLocked}
+              onChange={(e) => setReferralId(e.target.value)}
+              className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
+            />
+            {userFound && <span className="text-green-500">User Found</span>}
+          </div>
+
           <input
             type="text"
             placeholder="Username"

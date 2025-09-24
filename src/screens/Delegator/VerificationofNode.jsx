@@ -1,19 +1,89 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUserStore from "../../store/userStore";
 import useConstStore from "../../store/constStore";
 import axios from "axios";
 import Footer from "../../components/common/FooterTwo";
-import { Link } from "react-router";
+import { TiTick } from "react-icons/ti";
+import Web3 from "web3";
+import erc20Abi from "../../erc20Abi.json";
+import contractAbi from "../../contractAbi.json";
 
-function VerificationofNode() {
+function PromoPackHistory() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
+  const [expandedIndex, setExpandedIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [showModel, setShowModel] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
   const { user, isConnected, token } = useUserStore();
-  const { baseUrl, setScreenLoading } = useConstStore();
+  const {
+    baseUrl,
+    usdtAddress,
+    contractAddress,
+    walletAddress,
+    setScreenLoading,
+    setWalletAddress,
+  } = useConstStore();
+
+  useEffect(() => {
+    const connectWallet = async () => {
+      if (!window.ethereum) {
+        alert("Please install MetaMask!");
+        return;
+      }
+
+      try {
+        let accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+
+        if (accounts.length === 0) {
+          accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+        }
+
+        setWalletAddress(accounts[0]);
+
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x38",
+              chainName: "Binance Smart Chain",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "BNB",
+                decimals: 18,
+              },
+              rpcUrls: ["https://bsc-dataseed.binance.org/"],
+              blockExplorerUrls: ["https://bscscan.com/"],
+            },
+          ],
+        });
+
+        window.ethereum.on("accountsChanged", (acc) => {
+          setWalletAddress(acc[0] || null);
+        });
+      } catch (err) {
+        if (err.code === -32002) {
+          console.error(
+            "MetaMask request already pending. Please open MetaMask."
+          );
+        } else {
+          console.error("Wallet connection failed:", err);
+          alert("Wallet Connection Failed.");
+        }
+      }
+    };
+
+    connectWallet();
+  }, []);
 
   useEffect(() => {
     // console.log(user?.id);
@@ -44,7 +114,7 @@ function VerificationofNode() {
       }
     };
     fetchUserData();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     let filtered = [...data];
@@ -59,6 +129,10 @@ function VerificationofNode() {
     setFilteredData(filtered);
     setCurrentPage(1);
   }, [searchValue, data]);
+
+  const toggleExpand = (index) => {
+    setExpandedIndex((prev) => (prev === index ? null : index));
+  };
 
   const handleChangeRows = (e) => {
     setRowsPerPage(Number(e.target.value));
@@ -90,24 +164,121 @@ function VerificationofNode() {
     return pages;
   };
 
+  async function handleSubmit() {
+    try {
+      const response1 = await axios.post(
+        `https://worldofsoftware.in/u2u_depin/api/check_pin`,
+        {
+          number_of_pin: 1,
+        }
+      );
+      console.log(response1);
+      console.log(selectedItem);
+
+      if (response1.data.status != 200) {
+        alert("Transaction Failed. No CheckPin Available!");
+        return;
+      }
+
+      if (!window.ethereum) {
+        alert("Please install MetaMask!");
+        return;
+      }
+
+      const web3 = new Web3(window.ethereum);
+
+      const amountInWei = web3.utils.toWei("1", "ether");
+
+      const usdt = new web3.eth.Contract(erc20Abi, usdtAddress);
+
+      await usdt.methods
+        .approve(contractAddress, amountInWei.toString())
+        .send({ from: walletAddress });
+
+      const contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+      const receipt = await contract.methods
+        .deposit(amountInWei)
+        .send({ from: walletAddress });
+
+      console.log("Deposit confirmed ✅", receipt);
+
+      await axios.post(
+        `https://worldofsoftware.in/u2u_depin/api/verify_u2u_user`,
+        {
+          lending_log_id: selectedItem?.id,
+          transaction_hash: receipt?.transactionHash,
+          wallet_address: walletAddress,
+          amount: selectedItem?.mobile,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      await axios.post(
+        `${baseUrl}verification_confirm`,
+        {
+          lending_log_id: selectedItem?.id,
+          transaction_hash: receipt?.transactionHash,
+          wallet_address: walletAddress,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setRefresh(!refresh);
+      setSelectedItem(null);
+      alert("Transaction Complete!");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className="flex-1 p-4 flex flex-col overflow-x-hidden">
-      <div className="flex justify-between items-center">
-        <div className="text-lg font-semibold">Verification</div>
-        <div
-          onClick={() => window.open("https://node.u2uglobal.xyz/", "_")}
-          className="text-sm  text-green-400 hover:text-green-300 transition ease-in-out duration-300 cursor-pointer"
-        >
-          Click here - Depin Subnet Rewards
+      {showModel && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 bg-opacity-50 z-50">
+          <div className="bg-[#1F2C24] p-6 rounded-lg w-80 text-center">
+            <h2 className="text-lg font-semibold mb-4">Are You Sure!</h2>
+            <p className="mb-4">1 USDT Will Be Deducted From Your Wallet?</p>
+            <div className="flex justify-around">
+              <button
+                className="bg-green-400 cursor-pointer px-4 py-2 rounded hover:bg-green-500"
+                onClick={() => {
+                  handleSubmit();
+                  setShowModel(false);
+                }}
+              >
+                Confirm
+              </button>
+              <button
+                className="bg-gray-400  cursor-pointer px-4 py-2 rounded hover:bg-gray-500"
+                onClick={() => setShowModel(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
+      )}
+      <div className="flex justify-between items-center">
+        <div className="text-lg font-semibold">Activation History</div>
         <div className="text-xs">
-          <span className="text-green-300">Pre Booking Packages</span> {">>"}{" "}
-          Verification
+          <span className="text-green-300">Wallet</span> {">>"} Activation
+          History
         </div>
       </div>
+
       <div className="rounded-lg bg-[#1F2C24] px-5 py-2 my-5">
         <div className="font-semibold border-b border-gray-500 pb-3">
-          Verification
+          Activation History
         </div>
 
         <div className="pt-3">
@@ -138,8 +309,9 @@ function VerificationofNode() {
           </div>
         </div>
 
-        <div className="overflow-x-auto w-full max-w-full mt-4 h-118">
-          <table className="table w-full text-xs ">
+        {/* ✅ Constrain the wrapper so it never grows wider than the screen */}
+        <div className="overflow-x-auto w-full max-w-full mt-4 h-128">
+          <table className="table w-full text-xs">
             <thead className="text-gray-300">
               <tr>
                 <th>#</th>
@@ -147,10 +319,6 @@ function VerificationofNode() {
                 <th>Transaction Id</th>
                 <th>UserId</th>
                 <th>Package</th>
-                <th>Delegator Amount</th>
-                <th>Validator Platform Fee</th>
-                <th>U2U Phone/Depin</th>
-                <th>Total Amount</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -163,38 +331,84 @@ function VerificationofNode() {
                 </tr>
               ) : (
                 currentRows.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={
-                      (index + startIdx) % 2 === 0
-                        ? "bg-[#303C34]"
-                        : "bg-[#1F2C24]"
-                    }
-                  >
-                    <td className="text-nowrap">{index + 1}</td>
+                  <React.Fragment key={startIdx + index}>
+                    <tr
+                      className={
+                        (index + startIdx) % 2 === 0
+                          ? "bg-[#303C34]"
+                          : "bg-[#1F2C24]"
+                      }
+                    >
+                      <td className="flex gap-2 items-center text-nowrap">
+                        <button
+                          onClick={() => toggleExpand(startIdx + index)}
+                          className={`w-5 h-5 cursor-pointer flex items-center justify-center rounded-full text-white font-semibold transition-transform duration-300 transform ${
+                            expandedIndex === startIdx + index
+                              ? "bg-red-500 rotate-45"
+                              : "bg-green-400 hover:bg-green-500"
+                          }`}
+                        >
+                          +
+                        </button>
+                        <span className="font-medium text-gray-100 text-nowrap">
+                          {startIdx + index + 1}
+                        </span>
+                      </td>
+                      <td className=" text-nowrap">
+                        {item.created_at
+                          ? new Date(item.created_at).toLocaleString("en-GB", {
+                              hour12: false,
+                            })
+                          : "-"}
+                      </td>
+                      <td className="text-nowrap">{item.trans_id}</td>
+                      <td className="text-nowrap">{item.username}</td>
+                      <td className="text-nowrap">{item.package_name}</td>
+                      <td className="text-nowrap">
+                        {item.verification_status == "completed" ? (
+                          <span className="bg-emerald-400 flex gap-1 items-center rounded px-2 py-1">
+                            <TiTick /> Verified
+                          </span>
+                        ) : (
+                          <span
+                            onClick={() => {
+                              setSelectedItem(item);
+                              setShowModel(true);
+                            }}
+                            className="rounded px-6 cursor-pointer hover:bg-gray-500 transition ease-in-out duration-300 py-1 bg-gray-400"
+                          >
+                            Verify
+                          </span>
+                        )}
+                      </td>
+                    </tr>
 
-                    <td className="flex gap-2 items-center text-nowrap">
-                      {item.created_at != "-"
-                        ? new Date(item.created_at).toLocaleString("en-GB", {
-                            hour12: false,
-                          })
-                        : "-"}
-                    </td>
-                    <td className="text-nowrap">{item.trans_id}</td>
-                    <td className="text-nowrap">{item.username}</td>
-                    <td className="text-nowrap">{item.package_name}</td>
-                    <td className="text-nowrap">
-                      ${item.lend_amount.toFixed(2) + ` [${item.pack_amount}]`}
-                    </td>
-                    <td className="text-nowrap">${item.fee.toFixed(2)}</td>
-                    <td className="text-nowrap">{item.mobile.toFixed(2)}</td>
-                    <td className="text-nowrap">{item.amount.toFixed(2)}</td>
-                    <td className="text-nowrap">
-                      {item.verification_status == "completed"
-                        ? "Verified"
-                        : "Verify"}
-                    </td>
-                  </tr>
+                    {expandedIndex === startIdx + index && (
+                      <tr>
+                        <td colSpan={6}>
+                          <div className="p-4 text-sm text-gray-200 animate-slideDown">
+                            <p>
+                              <strong>Delegator Amount : </strong> $
+                              {item.lend_amount.toFixed(2) +
+                                ` [${item.pack_amount}]` || "0"}
+                            </p>
+                            <p>
+                              <strong>Validator Platform Fee :</strong> $
+                              {item.fee.toFixed(2) || "-"}
+                            </p>
+                            <p>
+                              <strong>U2U Phone/Depin : </strong>$
+                              {item.mobile || "-"}
+                            </p>
+                            <p>
+                              <strong>Total Amount :</strong> $
+                              {item.amount.toFixed(2) || "0"}
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))
               )}
             </tbody>
@@ -224,7 +438,7 @@ function VerificationofNode() {
                 <button
                   key={p}
                   onClick={() => setCurrentPage(p)}
-                  className={`px-2 py-1 cursor-pointer rounded ${
+                  className={`px-2 cursor-pointer py-1 rounded ${
                     currentPage === p
                       ? "bg-green-400 text-white"
                       : "bg-[#26362C] text-gray-200 hover:bg-[#1F2C24]"
@@ -237,7 +451,7 @@ function VerificationofNode() {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-2 py-1 cursor-pointer bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
+              className="px-2 cursor-pointer py-1 bg-[#26362C] rounded hover:bg-[#1F2C24] disabled:opacity-50"
             >
               Next
             </button>
@@ -249,4 +463,4 @@ function VerificationofNode() {
   );
 }
 
-export default VerificationofNode;
+export default PromoPackHistory;

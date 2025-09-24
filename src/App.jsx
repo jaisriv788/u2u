@@ -14,6 +14,7 @@ import ForgetPassword from "./screens/ForgetPassword";
 import ResetPassword from "./screens/ResetPassword";
 import Chat from "./components/Support/Chat";
 import Invoice from "./components/common/Invoice";
+import BuyPackage from "./screens/Delegator/BuyPackage";
 
 //authentication screens
 import Profile from "./screens/Authentication/Profile";
@@ -57,11 +58,53 @@ import Loader from "./components/common/Loader";
 //----------------------------------------------------------------------
 
 function App() {
-  const { screenLoading } = useConstStore();
+  const { screenLoading, msg, showSuccess, showError } = useConstStore();
 
   return (
     <>
       {screenLoading && <Loader />}
+      {showError && (
+        <div
+          role="alert"
+          className="alert alert-error absolute z-50 right-0 top-2 font-bold text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{msg}</span>
+        </div>
+      )}
+      {showSuccess && (
+        <div
+          role="alert"
+          className="alert alert-success absolute z-50 right-0 top-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{msg}</span>
+        </div>
+      )}
       <Routes>
         {/*public route*/}
         <Route element={<PublicRoute />}>
@@ -113,6 +156,7 @@ function App() {
           />
           <Route path="/promopackhistory" element={<PromoPackHistory />} />
           <Route path="/verificationofnode" element={<VerificationofNode />} />
+          <Route path="/buypackage" element={<BuyPackage />} />
 
           {/*wallet & delegator route*/}
           <Route path="/delegateusdtbep20" element={<Delegate />} />

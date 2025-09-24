@@ -12,6 +12,12 @@ const useConstStore = create(
         setWalletAddress: (walletAddress) => set({ walletAddress }),
         screenLoading: false,
         setScreenLoading: (screenLoading) => set({ screenLoading }),
+        showSuccess: false,
+        setShowSuccess: (showSuccess) => set({ showSuccess }),
+        msg: "",
+        setMsg: (msg) => set({ msg }),
+        showError: false,
+        setShowError: (showError) => set({ showError }),
       }),
       {
         name: "const-storage",

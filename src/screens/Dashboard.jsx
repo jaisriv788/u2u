@@ -37,7 +37,7 @@ function Dashboard() {
               },
             }
           );
-          // console.log("User data:", response.data);
+          console.log("User data:", response.data);
           if (response.data.status == 200) {
             setDashBoardData(response.data.data);
           }
@@ -55,6 +55,7 @@ function Dashboard() {
     {
       title: "WITHDRAW BALANCE",
       balance: dashboardData?.user_wallet?.balance.toFixed(4),
+
       icon: FaWallet,
     },
     {
@@ -74,6 +75,7 @@ function Dashboard() {
     {
       title: "DELEGATOR REWARD",
       amount: dashboardData?.daily_profit.toFixed(4),
+      balanceRoi: dashboardData?.user_wallet?.roi_pending.toFixed(4),
       tag: (
         <div>
           Earn delegator rewards{" "}
@@ -91,7 +93,6 @@ function Dashboard() {
           <span className="text-[#1FD022] font-semibold">10%</span> from team
         </div>
       ),
-      showBtn: true,
     },
     {
       title: "DELEGATOR LEVEL BONUS",
@@ -102,7 +103,6 @@ function Dashboard() {
           <span className="text-[#1FD022] font-semibold">20</span> level
         </div>
       ),
-      showBtn: true,
     },
     {
       title: "RANK & REWARD",
@@ -113,13 +113,12 @@ function Dashboard() {
           <span className="text-[#1FD022] font-semibold">$ 20,00,000</span>
         </div>
       ),
-      showBtn: true,
     },
   ];
 
   return (
     <div className="flex-1 p-4 flex flex-col gap-3">
-      <Marquee />
+      {/* <Marquee /> */}
       <Intro />
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
         {Data.map((item, index) => (
@@ -134,7 +133,13 @@ function Dashboard() {
       <Graph />
       <div className="grid lg:grid-cols-2 gap-3 sm:gap-5">
         {Data2.map((item, index) => (
-          <DetailedCards key={index} title={item.title} amount={item.amount}>
+          <DetailedCards
+            key={index}
+            title={item.title}
+            amount={item.amount}
+            show={item.showBtn}
+            balanceRoi={item.balanceRoi}
+          >
             {item.tag}
           </DetailedCards>
         ))}

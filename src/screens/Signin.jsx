@@ -8,7 +8,7 @@ function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setMsg, setShowSuccess, setShowError } = useConstStore();
   const { setUser, setIsConnected, setToken } = useUserStore();
 
   const navigate = useNavigate();
@@ -22,13 +22,23 @@ function Signin() {
       });
 
       if (response.data.status == 200) {
-        alert(response.data.msg);
+        setMsg(response.data.msg);
         setUser(response.data.user);
+        setShowSuccess(true);
+        setTimeout(() => {
+          setMsg("");
+          setShowSuccess(false);
+          navigate("/dashboard");
+        }, 1000);
         setIsConnected(true);
         setToken(response.data.token);
-        navigate("/dashboard");
       } else if (response.data.status == 201) {
-        alert(response.data.msg);
+        setMsg(response.data.msg);
+        setShowError(true);
+        setTimeout(() => {
+          setMsg("");
+          setShowError(false);
+        }, 1000);
       }
     } catch (err) {
       console.log(err);

@@ -4,7 +4,7 @@ export default function BlockchainBlocksLoader() {
   const blocks = Array.from({ length: 8 });
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#101220]">
+    <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#101220]">
       <div className="flex space-x-2">
         {blocks.map((_, i) => (
           <span
