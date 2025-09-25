@@ -84,10 +84,10 @@ function DelegatorPPActivation() {
                 <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
                 Delegator: ${item.min_price}
               </div>
-              <div className="flex items-center gap-1 text-xs sm:text-sm">
+              {/* <div className="flex items-center gap-1 text-xs sm:text-sm">
                 <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
                 Mobile: ${item.max_price}
-              </div>
+              </div> */}
               <div className="flex items-center gap-1 text-xs sm:text-sm">
                 <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
                 Bonus (%): {item.roi}

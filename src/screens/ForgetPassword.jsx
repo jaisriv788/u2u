@@ -15,8 +15,9 @@ function ForgetPassword() {
       setLoading(true);
       const response = await axios.post(`${baseUrl}submitForgetPassword`, {
         user_id: userId,
-        url: "http://localhost:5173/resetpassword",
+        url: "https://worldofsoftware.in/u2u_global_react/resetpassword",
       });
+      console.log(response)
       if (response.data.status == 200) {
         setUserId("");
         alert("Email sent successfully. Please check your email.");

@@ -72,22 +72,32 @@ function BuyPackage() {
           <div className="flex-1 flex flex-col gap-4 w-full lg:w-1/2">
             <div className="flex flex-col gap-2 bg-[#2B3A2E] p-4 rounded-xl shadow-inner">
               {[
-                `Delegator: $${selectedPackage.min_price ?? "-"}`,
-                `Mobile: $${selectedPackage.max_price ?? "-"}`,
-                `Bonus (%): ${selectedPackage.roi ?? "-"}`,
-                `UPhone Price: $${selectedPackage.uphone_price ?? "-"}`,
-                `D-Pin Price: $${selectedPackage.depin_price ?? "-"}`,
-                `Coin: ${selectedPackage.u2u_coin ?? "-"}`,
-                `Trip: ${selectedPackage.trip ?? "-"}`,
-                `Promo-Kit: ${selectedPackage.promo_kit ?? "-"}`,
-                `Validator Platform Fees: ${selectedPackage.fee ?? "-"}%`,
-                `Descriptions: ${selectedPackage.descriptions ?? "-"}`,
-              ].map((text, index) => (
-                <div key={index} className="flex items-start gap-3 break-words">
-                  <TiTick className="text-emerald-400 w-6 h-6 flex-shrink-0 mt-1" />
-                  <span className="text-gray-200 font-medium">{text}</span>
-                </div>
-              ))}
+                selectedPackage.min_price &&
+                  `Delegator: $${selectedPackage.min_price}`,
+                selectedPackage.roi && `Bonus (%): ${selectedPackage.roi}`,
+                selectedPackage.uphone_price &&
+                  `UPhone Price: $${selectedPackage.uphone_price}`,
+                selectedPackage.depin_price &&
+                  `D-Pin Price: $${selectedPackage.depin_price}`,
+                selectedPackage.u2u_coin && `Coin: ${selectedPackage.u2u_coin}`,
+                selectedPackage.trip && `Trip: ${selectedPackage.trip}`,
+                selectedPackage.promo_kit &&
+                  `Promo-Kit: ${selectedPackage.promo_kit}`,
+                (selectedPackage.fee || selectedPackage.fee === 0) &&
+                  `Validator Platform Fees: ${selectedPackage.fee}%`,
+                selectedPackage.descriptions &&
+                  `Descriptions: ${selectedPackage.descriptions}`,
+              ]
+                .filter(Boolean) // remove falsy values (undefined, null, "")
+                .map((text, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 break-words"
+                  >
+                    <TiTick className="text-emerald-400 w-6 h-6 flex-shrink-0 mt-1" />
+                    <span className="text-gray-200 font-medium">{text}</span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

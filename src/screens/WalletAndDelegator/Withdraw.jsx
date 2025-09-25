@@ -3,6 +3,7 @@ import axios from "axios";
 import useConstStore from "../../store/constStore";
 import useUserStore from "../../store/userStore";
 import useDashboardStore from "../../store/dashboardStore";
+import { useNavigate } from "react-router";
 
 function Withdraw() {
   const { baseUrl, setMsg, setShowError, setShowSuccess } = useConstStore();
@@ -11,6 +12,7 @@ function Withdraw() {
 
   const options = ["USDT"];
 
+  const navigate = useNavigate();
   const [option, setOption] = useState("USDT");
   const [amount, setAmount] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -39,11 +41,6 @@ function Withdraw() {
   }
 
   async function handleSubmit() {
-    if (receivedOtp == "" || otp == "") {
-      showError("Invalid Otp!");
-      return;
-    }
-
     if (!checked) {
       if (receivedOtp != otp) {
         alert("OTP Do Not Match!");
@@ -68,7 +65,12 @@ function Withdraw() {
           },
         }
       );
-      showSuccess("Withdraw Request Sent.");
+      if (response.data.status == 200) {
+        showSuccess("Withdraw Request Sent.");
+        navigate("/dashboard");
+      } else {
+        showError(response.data.msg);
+      }
       console.log(response.data);
     } catch (error) {
       console.log(error);

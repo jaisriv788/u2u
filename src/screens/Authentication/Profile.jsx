@@ -92,15 +92,6 @@ function Profile() {
         formData.append("image", image); // File object
       }
 
-      console.log(formData.get("user_id"));
-      console.log(formData.get("otpfa"));
-      console.log(formData.get("first_name"));
-      console.log(formData.get("wallet_address"));
-      console.log(formData.get("country"));
-      console.log(formData.get("u2u_wallet"));
-      console.log(formData.get("otp"));
-      console.log(formData.get("image"));
-
       const response = await axios.post(`${baseUrl}updateProfile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -331,6 +322,7 @@ function Profile() {
                   onChange={() => {
                     setChecked((prev) => !prev);
                     setOtp("");
+                    setOtpfa("");
                   }}
                   className="toggle border-gray-600 bg-gray-500 checked:border-emerald-500 checked:bg-emerald-400 checked:text-emerald-800"
                 />
