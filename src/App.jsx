@@ -59,10 +59,45 @@ import Loader from "./components/common/Loader";
 //----------------------------------------------------------------------
 
 function App() {
-  const { screenLoading, msg, showSuccess, showError } = useConstStore();
+  const {
+    screenLoading,
+    msg,
+    showSuccess,
+    showError,
+    // showNotification,
+    // setShowNotification,
+  } = useConstStore();
 
   return (
     <>
+      {/* {showNotification && (
+        <div className="fixed z-30 bg-black/70 inset-0 pt-10">
+          <div className="max-w-md mx-auto bg-[#09182C] text-gray-200 shadow-lg rounded-2xl p-6">
+            <h2 className="text-xl font-bold text-white mb-3">Notice</h2>
+
+            <p className="text-gray-300 mb-6">
+              Dear Delegator, We are currently upgrading our complete user
+              dashboard in Node & React. The system will be fully live again
+              within the next 3–4 hours. Rest assured, all your funds and data
+              remain completely safe and secure. Your trust is our top priority,
+              and we are committed to delivering the best possible experience.
+              Thank you for your patience and continued support. – Team Asia
+              Validator{" "}
+            </p>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setShowNotification(false);
+                }}
+                className="px-4 cursor-pointer py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+              >
+                Okay
+              </button>
+            </div>
+          </div>
+        </div>
+      )} */}
       {screenLoading && <Loader />}
       {showError && (
         <div

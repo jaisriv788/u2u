@@ -112,7 +112,8 @@ function Link() {
           <div className="text-white font-semibold">Invitation Link</div>
 
           <div className="text-sm text-white break-words">
-            https://worldofsoftware.in/u2u_global_react/register/{user?.username}
+            https://worldofsoftware.in/u2u_global_react/register/
+            {user?.username}
           </div>
 
           <div className="flex justify-center sm:justify-start gap-3 mt-5 text-white">
@@ -158,7 +159,7 @@ function Link() {
       </div>
       <div className="bg-gradient-to-br from-[#0F0F1D] via-[#102031] to-[#24BB79] rounded-lg p-3 flex flex-col gap-3">
         <div className="font-bold flex gap-2 items-center border-b pb-2 border-gray-600">
-          <FaInbox /> INCOME CAPPING - ( 2.4X ) OR ( 4.5X )
+          <FaInbox /> INCOME CAPPING - ( 2.4X ) OR ( 5.4X )
         </div>
 
         <Chart

@@ -186,7 +186,7 @@ function PromoPackHistory() {
   async function handleSubmit() {
     try {
       const response1 = await axios.post(
-        `https://worldofsoftware.in/u2u_depin/api/check_pin`,
+        `https://node.u2uglobal.xyz/api/check_pin`,
         {
           number_of_pin: 1,
         }
@@ -223,7 +223,7 @@ function PromoPackHistory() {
       console.log("Deposit confirmed ✅", receipt);
 
       await axios.post(
-        `https://worldofsoftware.in/u2u_depin/api/verify_u2u_user`,
+        `https://node.u2uglobal.xyz/api/verify_u2u_user`,
         {
           lending_log_id: selectedItem?.id,
           transaction_hash: receipt?.transactionHash,

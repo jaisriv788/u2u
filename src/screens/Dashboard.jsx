@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUserStore from "../store/userStore";
 import useConstStore from "../store/constStore";
 import useDashboardStore from "../store/dashboardStore";
@@ -19,6 +19,8 @@ function Dashboard() {
   const { user, isConnected, token } = useUserStore();
   const { baseUrl, setScreenLoading } = useConstStore();
   const { dashboardData, setDashBoardData } = useDashboardStore();
+
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     setScreenLoading(true);
@@ -118,6 +120,47 @@ function Dashboard() {
 
   return (
     <div className="flex-1 p-4 flex flex-col gap-3">
+      {showModal && (
+        <div className="fixed z-30 bg-black/70 inset-0 pt-10">
+          <div className="max-w-lg mx-auto bg-gradient-to-br from-[#0D1B2A] to-[#09182C] text-gray-200 shadow-xl rounded-2xl p-6 border border-gray-700">
+            {/* Heading */}
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-8 bg-emerald-500 rounded-full"></div>
+              <h2 className="text-2xl font-semibold text-white">Notice</h2>
+            </div>
+
+            {/* Message */}
+            <p className="text-gray-300 leading-relaxed mb-6">
+              Dear Delegator, We are currently upgrading our complete user
+              dashboard in{" "}
+              <span className="font-semibold text-emerald-400">
+                Node & React
+              </span>
+              . The system will be fully live again within the next{" "}
+              <span className="font-semibold">3–4 hours</span>. Rest assured,
+              all your funds and data remain completely safe and secure. Your
+              trust is our top priority, and we are committed to delivering the
+              best possible experience.
+              <br />
+              <br />
+              Thank you for your patience and continued support.
+              <span className="block mt-2 text-emerald-400 font-medium">
+                – Team Asia Validator
+              </span>
+            </p>
+
+            {/* Button */}
+            <div className="flex justify-end">
+              <div
+                onClick={() => setShowModal(false)}
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-lg shadow-md cursor-pointer transition"
+              >
+                Okay
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* <Marquee /> */}
       <Intro />
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
