@@ -70,13 +70,18 @@ function BuyPackage() {
 
           {/* Package Details */}
           <div className="flex-1 flex flex-col gap-4 w-full lg:w-1/2">
-            <div className="flex flex-col gap-4 bg-[#2B3A2E] p-4 rounded-xl shadow-inner">
+            <div className="flex flex-col gap-2 bg-[#2B3A2E] p-4 rounded-xl shadow-inner">
               {[
-                `Delegator: $${selectedPackage.min_price}`,
-                `Mobile: $${selectedPackage.max_price}`,
-                `Bonus (%): ${selectedPackage.roi}`,
-                `Validator Platform Fees: ${selectedPackage.fee}%`,
-                `Descriptions: ${selectedPackage.descriptions}`,
+                `Delegator: $${selectedPackage.min_price ?? "-"}`,
+                `Mobile: $${selectedPackage.max_price ?? "-"}`,
+                `Bonus (%): ${selectedPackage.roi ?? "-"}`,
+                `UPhone Price: $${selectedPackage.uphone_price ?? "-"}`,
+                `D-Pin Price: $${selectedPackage.depin_price ?? "-"}`,
+                `Coin: ${selectedPackage.u2u_coin ?? "-"}`,
+                `Trip: ${selectedPackage.trip ?? "-"}`,
+                `Promo-Kit: ${selectedPackage.promo_kit ?? "-"}`,
+                `Validator Platform Fees: ${selectedPackage.fee ?? "-"}%`,
+                `Descriptions: ${selectedPackage.descriptions ?? "-"}`,
               ].map((text, index) => (
                 <div key={index} className="flex items-start gap-3 break-words">
                   <TiTick className="text-emerald-400 w-6 h-6 flex-shrink-0 mt-1" />

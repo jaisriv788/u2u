@@ -27,7 +27,7 @@ function DelegatorPPActivation() {
             },
           }
         );
-        // console.log(response.data.data);
+        console.log(response.data.data);
         if (response.data.status === 200) {
           setData(response.data.data);
         }
@@ -92,6 +92,38 @@ function DelegatorPPActivation() {
                 <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
                 Bonus (%): {item.roi}
               </div>
+
+              {item.uphone_price && (
+                <div className="flex items-center gap-1 text-xs sm:text-sm">
+                  <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
+                  UPhone Price: ${item.uphone_price}
+                </div>
+              )}
+              {item.depin_price && (
+                <div className="flex items-center gap-1 text-xs sm:text-sm">
+                  <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
+                  D-Pin Price: ${item.depin_price}
+                </div>
+              )}
+              {item.u2u_coin && (
+                <div className="flex items-center gap-1 text-xs sm:text-sm">
+                  <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
+                  Coin: {item.u2u_coin}
+                </div>
+              )}
+              {item.trip && (
+                <div className="flex items-center gap-1 text-xs sm:text-sm">
+                  <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
+                  Trip: {item.trip}
+                </div>
+              )}
+              {item.promo_kit && (
+                <div className="flex items-center gap-1 text-xs sm:text-sm">
+                  <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
+                  Promo-Kit: {item.promo_kit}
+                </div>
+              )}
+
               <div className="flex items-center gap-1 text-xs sm:text-sm">
                 <TiTick className="text-emerald-400 w-5 h-5 flex-shrink-0" />{" "}
                 Validator Platform Fees: {item.fee}%

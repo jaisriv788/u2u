@@ -21,6 +21,7 @@ function Profile() {
   const [image, setImage] = useState(null);
   const [receivedOtp, setReceivedOtp] = useState("");
   const [otp, setOtp] = useState("");
+  const [otpfa, setOtpfa] = useState("");
   const [loading, setLoading] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -58,7 +59,7 @@ function Profile() {
           },
         }
       );
-      // console.log(response.data.data.otp);
+      console.log(response.data.data.otp);
 
       setReceivedOtp(response.data.data.otp);
       showSuccess("OTP Sent To Your Mail.");
@@ -70,56 +71,76 @@ function Profile() {
   }
 
   async function handleSubmit() {
-    if (receivedOtp == otp) {
-      try {
-        setLoading(true);
-        const formData = new FormData();
-        formData.append("user_id", user?.id);
-        formData.append("first_name", name);
-        formData.append("wallet_address", address);
-        formData.append("country", country);
-        formData.append("u2u_wallet", U2UAddress);
-        formData.append("otp", otp);
-        if (image) {
-          formData.append("image", image); // File object
-        }
-
-        const response = await axios.post(`${baseUrl}updateProfile`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.data.status == 200) {
-          const res = await axios.post(
-            `${baseUrl}user_detail`,
-            {
-              user_id: user?.id,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (res.data.status == 200) {
-            setOtp("");
-            setImage(null);
-            setReceivedOtp("");
-            showSuccess("Profile Updated.")();
-          }
-          setUser(res.data.data.user);
-          setLoading(false);
-        }
-      } catch (error) {
-        setLoading(false);
-        console.log(error.response.data.msg);
-        showError(error.response.data.msg);
+    console.log(checked);
+    if (!checked) {
+      if (receivedOtp != otp) {
+        alert("OTP Do Not Match!");
+        return;
       }
-    } else {
-      showError("Otp does not match");
+    }
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("user_id", user?.id);
+      formData.append("first_name", name);
+      formData.append("wallet_address", address);
+      formData.append("country", country);
+      formData.append("u2u_wallet", U2UAddress);
+      formData.append("otp", otp);
+      formData.append("otpfa", otpfa);
+      if (image) {
+        formData.append("image", image); // File object
+      }
+
+      console.log(formData.get("user_id"));
+      console.log(formData.get("otpfa"));
+      console.log(formData.get("first_name"));
+      console.log(formData.get("wallet_address"));
+      console.log(formData.get("country"));
+      console.log(formData.get("u2u_wallet"));
+      console.log(formData.get("otp"));
+      console.log(formData.get("image"));
+
+      const response = await axios.post(`${baseUrl}updateProfile`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.status == 200) {
+        const res = await axios.post(
+          `${baseUrl}user_detail`,
+          {
+            user_id: user?.id,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log(res);
+        if (res.data.status == 200) {
+          setOtp("");
+          setOtpfa("");
+          setImage(null);
+          setReceivedOtp("");
+          setUser({
+            ...res.data.data.user,
+            delegator_amount: res.data.data.delegator_amount,
+            image: res.data.data.image,
+            rank_name: res.data.data.rankname,
+          });
+          showSuccess("Profile Updated.");
+        }
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error.response.data);
+      showError(error.response.data.msg);
     }
   }
 
@@ -342,8 +363,8 @@ function Profile() {
               <div className="flex flex-col">
                 <span className="">Two Factor Passkey</span>
                 <input
-                  onChange={(e) => setOtp(e.target.value)}
-                  value={otp}
+                  onChange={(e) => setOtpfa(e.target.value)}
+                  value={otpfa}
                   type="text"
                   className="bg-[#26362C] rounded px-3 py-0.5"
                 />

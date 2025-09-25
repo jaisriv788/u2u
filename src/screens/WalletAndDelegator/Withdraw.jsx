@@ -43,34 +43,38 @@ function Withdraw() {
       showError("Invalid Otp!");
       return;
     }
-    if (receivedOtp == otp) {
-      try {
-        setDisableSubmit(true);
-        const response = await axios.post(
-          `${baseUrl}storeWithdrawUsdt`,
-          {
-            user_id: user?.id,
-            amount,
-            transaction_password: currentPassword,
-            otp,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        showSuccess("Withdraw Request Sent.");
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-        showError("Something Went Wrong While Sending The Request.");
-      } finally {
-        setDisableSubmit(false);
+
+    if (!checked) {
+      if (receivedOtp != otp) {
+        alert("OTP Do Not Match!");
+        return;
       }
-    } else {
-      showError("Otp does not match");
+    }
+
+    try {
+      setDisableSubmit(true);
+      const response = await axios.post(
+        `${baseUrl}storeWithdrawUsdt`,
+        {
+          user_id: user?.id,
+          amount,
+          transaction_password: currentPassword,
+          otp,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      showSuccess("Withdraw Request Sent.");
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      showError("Something Went Wrong While Sending The Request.");
+    } finally {
+      setDisableSubmit(false);
     }
   }
 
@@ -166,10 +170,14 @@ function Withdraw() {
               />
               <button
                 onClick={handleOtp}
-                disabled={disableOtp}
+                disabled={disableOtp || disableSubmit}
                 className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                Send Otp
+                {disableOtp
+                  ? "Sending OTP..."
+                  : disableSubmit
+                  ? "Please Wait..."
+                  : "Send Otp"}
               </button>
             </div>
           )}
@@ -201,10 +209,14 @@ function Withdraw() {
               />
               <button
                 onClick={handleOtp}
-                disabled={disableOtp}
+                disabled={disableOtp || disableSubmit}
                 className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                {disableOtp ? "Sending OTP..." : "Send Otp"}
+                {disableOtp
+                  ? "Sending OTP..."
+                  : disableSubmit
+                  ? "Please Wait..."
+                  : "Send Otp"}
               </button>
             </div>
           ) : (
@@ -222,10 +234,14 @@ function Withdraw() {
           <div className="flex gap-5 mt-5">
             <button
               onClick={handleSubmit}
-              disabled={disableSubmit}
+              disabled={disableSubmit || disableOtp}
               className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
             >
-              {disableSubmit ? "Withdrawing..." : "Submit"}
+              {disableSubmit
+                ? "Withdrawing..."
+                : disableOtp
+                ? "Please Wait..."
+                : "Submit"}
             </button>
             <button
               onClick={() => {
