@@ -40,7 +40,9 @@ function Navbar() {
           className="h-7 "
         />
       </div>
-      {isProfileDetailOpen && <NavProfileDetail />}
+      {isProfileDetailOpen && (
+        <NavProfileDetail setIsProfileDetailOpen={setIsProfileDetailOpen} />
+      )}
     </div>
   );
 }

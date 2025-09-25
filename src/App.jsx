@@ -109,12 +109,12 @@ function App() {
       <Routes>
         {/*public route*/}
         <Route element={<PublicRoute />}>
-          <Route path="/" element={<Landing />} />
+          {/* <Route path="/" element={<Landing />} /> */}
           <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/register" element={<Signup />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/signup/:referralId?" element={<Signup />} />
+          <Route path="/register/:referralId?" element={<Signup />} />
         </Route>
 
         {/*private route*/}

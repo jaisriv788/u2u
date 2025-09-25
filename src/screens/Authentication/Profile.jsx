@@ -23,6 +23,7 @@ function Profile() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   function showError(msg) {
     setMsg(msg);
@@ -276,22 +277,79 @@ function Profile() {
                 className="w-15"
               />
             </div>
-            <div className="flex flex-col">
-              <span className="">One Time Password</span>
-              <input
-                onChange={(e) => setOtp(e.target.value)}
-                value={otp}
-                type="text"
-                className="bg-[#26362C] rounded px-3 py-0.5"
-              />
-              <button
-                onClick={handleOtp}
-                disabled={sendingOtp || loading}
-                className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
-              >
-                {sendingOtp ? "Sending OTP..." : loading ? "Please Wait.." : "Send OTP"}
-              </button>
-            </div>
+
+            {user.status_2fa == "disable" && (
+              <div className="flex flex-col">
+                <span className="">One Time Password</span>
+                <input
+                  onChange={(e) => setOtp(e.target.value)}
+                  value={otp}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+                <button
+                  onClick={handleOtp}
+                  disabled={sendingOtp || loading}
+                  className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+                >
+                  {sendingOtp
+                    ? "Sending OTP..."
+                    : loading
+                    ? "Please Wait.."
+                    : "Send OTP"}
+                </button>
+              </div>
+            )}
+
+            {user.status_2fa == "enable" && (
+              <div className="flex gap-2 items-center">
+                <input
+                  id="check"
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => {
+                    setChecked((prev) => !prev);
+                    setOtp("");
+                  }}
+                  className="toggle border-gray-600 bg-gray-500 checked:border-emerald-500 checked:bg-emerald-400 checked:text-emerald-800"
+                />
+                <label>{!checked ? "OTP" : "Two Factor Authentication"}</label>
+              </div>
+            )}
+
+            {!checked ? (
+              <div className="flex flex-col">
+                <span className="">One Time Password</span>
+                <input
+                  onChange={(e) => setOtp(e.target.value)}
+                  value={otp}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+                <button
+                  onClick={handleOtp}
+                  disabled={sendingOtp || loading}
+                  className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+                >
+                  {sendingOtp
+                    ? "Sending OTP..."
+                    : loading
+                    ? "Please Wait.."
+                    : "Send OTP"}
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col">
+                <span className="">Two Factor Passkey</span>
+                <input
+                  onChange={(e) => setOtp(e.target.value)}
+                  value={otp}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+              </div>
+            )}
+
             <div className="flex gap-5 mt-5">
               <button
                 onClick={handleSubmit}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import useConstStore from "../store/constStore";
 import useUserStore from "../store/userStore";
 import axios from "axios";
@@ -7,6 +7,8 @@ import axios from "axios";
 function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const location = useLocation();
+  const userDetails = location.state?.details;
 
   const { baseUrl, setMsg, setShowSuccess, setShowError } = useConstStore();
   const { setUser, setIsConnected, setToken } = useUserStore();
@@ -21,6 +23,7 @@ function Signin() {
         password: password,
       });
 
+      // console.log(response.data);
       if (response.data.status == 200) {
         setMsg(response.data.msg);
         setUser(response.data.user);
@@ -55,6 +58,13 @@ function Signin() {
             information by email address and password.
           </div>
         </div>
+        {userDetails && (
+          <div className="bg-green-300/60 rounded mt-3 px-2 py-1 text-green-700">
+            <div>Registration Done Successfully</div>
+            <div>User Id : {userDetails.username}</div>
+            <div>Password : {userDetails.show_pass}</div>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
           <input
             type="text"
@@ -83,7 +93,7 @@ function Signin() {
           <Link to="/forgetpassword" className="cursor-pointer">
             Forgot Password?
           </Link>{" "}
-          <Link to="/signup" className="cursor-pointer">
+          <Link to="/register" className="cursor-pointer">
             SignUp
           </Link>
         </div>

@@ -112,9 +112,11 @@ function Signup() {
       agree_terms: checked,
     });
 
+    // console.log(response.data);
+
     if (response.data.status == 200) {
       alert(response.data.msg);
-      navigate("/signin");
+      navigate("/signin", { state: { details: response.data.user } });
     } else if (response.data.status == 201) {
       alert(response.data.msg);
     } else {
@@ -133,7 +135,6 @@ function Signup() {
             information by email address and password.
           </div>
         </div>
-        <span>hi</span>
         <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
           <div>
             <input
@@ -178,11 +179,17 @@ function Signup() {
             ))}
           </select>
           <input
-            type="number"
+            type="tel"
             placeholder="Mobile Number"
             required
             value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            maxLength={10}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "");
+              if (value.length <= 10) {
+                setNumber(value);
+              }
+            }}
             className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
           />
           <input
@@ -258,7 +265,7 @@ function Signup() {
           </div>
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !userFound}
             className="relative overflow-hidden disabled:cursor-not-allowed text-white bg-[#38C66C] font-semibold py-2 rounded cursor-pointer border border-black hover:border-amber-400 transition ease-in-out duration-300"
           >
             REGISTER NOW

@@ -37,7 +37,7 @@ function Dashboard() {
               },
             }
           );
-          console.log("User data:", response.data);
+          // console.log("User data:", response.data);
           if (response.data.status == 200) {
             setDashBoardData(response.data.data);
           }

@@ -3,46 +3,49 @@ import { GiBanknote } from "react-icons/gi";
 import { VscSignOut } from "react-icons/vsc";
 import useUserStore from "../../store/userStore";
 import useDashboardStore from "../../store/dashboardStore";
-import axios from "axios";
-import { useEffect } from "react";
+// import axios from "axios";
+// import { useEffect } from "react";
 import useConstStore from "../../store/constStore";
 import { MdOutlineSecurity } from "react-icons/md";
 import { useNavigate } from "react-router";
 
-function NavProfileDetail() {
-  const { user, token, resetUser } = useUserStore();
+function NavProfileDetail({ setIsProfileDetailOpen }) {
+  const { user, resetUser } = useUserStore();
   const { dashboardData, resetDashBoard } = useDashboardStore();
-  const { baseUrl, setWalletAddress } = useConstStore();
+  const { setWalletAddress } = useConstStore();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(`${baseUrl}packages_list`);
-        console.log(token);
-        const response = await axios.post(
-          `${baseUrl}packages_list`,
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // console.log(`${baseUrl}packages_list`);
+  //       // console.log(token);
+  //       const response = await axios.post(
+  //         `${baseUrl}packages_list`,
+  //         {},
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="absolute z-50 bg-[#1F2C24] rounded right-6 top-13 sm:min-w-90 p-1 text-xs sm:text-sm">
-      <div className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer hover:bg-[#4f5e54] transition ease-in-out duration-300">
+      <div
+        onClick={() => setIsProfileDetailOpen(false)}
+        className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer hover:bg-[#4f5e54] transition ease-in-out duration-300"
+      >
         <FaUser className="bg-[#4f5e54] p-1 text-2xl rounded-full" />
         <div className="text-xs font-semibold ">
           <div>{user.username}</div>
@@ -52,7 +55,10 @@ function NavProfileDetail() {
 
       <div className="h-[1px] bg-[#4f5e54] my-1"></div>
 
-      <div className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300">
+      <div
+        onClick={() => setIsProfileDetailOpen(false)}
+        className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300"
+      >
         <GiBanknote className="bg-[#4f5e54] p-1 text-2xl rounded-full" />
         <div className="text-xs font-semibold ">
           <div>
@@ -64,10 +70,20 @@ function NavProfileDetail() {
 
       <div className="h-[1px] bg-[#4f5e54] my-1"></div>
 
-      <div onClick={() => navigate("/twofa")} className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300">
+      <div
+        onClick={() => {
+          navigate("/twofa");
+          setIsProfileDetailOpen(false);
+        }}
+        className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300"
+      >
         <MdOutlineSecurity className="bg-[#4f5e54] p-1 text-2xl rounded-full" />
         <div className="text-xs font-semibold ">
-          <div>Two Factor Authentication</div>
+          <div>
+            {" "}
+            {user.status_2fa == "enable"  ? "Disable" : "Enable"} Two Factor
+            Authentication
+          </div>
         </div>
       </div>
 
@@ -78,6 +94,7 @@ function NavProfileDetail() {
           resetDashBoard();
           resetUser();
           setWalletAddress(null);
+          setIsProfileDetailOpen(false);
         }}
         className="flex items-center gap-3 px-4 rounded py-1 cursor-pointer  hover:bg-[#4f5e54] transition ease-in-out duration-300"
       >
