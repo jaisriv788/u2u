@@ -119,7 +119,7 @@ function Dashboard() {
   ];
 
   return (
-    <div className="flex-1 p-4 flex flex-col gap-3">
+    <div className="flex-1 p-4 flex flex-col gap-3 max-w-screen">
       {showModal && (
         <div className="fixed z-30 bg-black/70 inset-0 pt-10">
           <div className="max-w-lg mx-auto bg-gradient-to-br from-[#0D1B2A] to-[#09182C] text-gray-200 shadow-xl rounded-2xl p-6 border border-gray-700">

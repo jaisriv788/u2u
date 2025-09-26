@@ -136,13 +136,14 @@ function Profile() {
   }
 
   useEffect(() => {
+    // console.log({ user });
     async function fetchCountries() {
       try {
-        console.log("fetching countries");
+        // console.log("fetching countries");
         setScreenLoading(true);
         const response = await axios.post(`${baseUrl}country`);
         // console.log(response.data.data);
-        console.log("fetched");
+        // console.log("fetched");
 
         setCountries(response.data.data);
       } catch (error) {
@@ -330,38 +331,39 @@ function Profile() {
               </div>
             )}
 
-            {!checked ? (
-              <div className="flex flex-col">
-                <span className="">One Time Password</span>
-                <input
-                  onChange={(e) => setOtp(e.target.value)}
-                  value={otp}
-                  type="text"
-                  className="bg-[#26362C] rounded px-3 py-0.5"
-                />
-                <button
-                  onClick={handleOtp}
-                  disabled={sendingOtp || loading}
-                  className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
-                >
-                  {sendingOtp
-                    ? "Sending OTP..."
-                    : loading
-                    ? "Please Wait.."
-                    : "Send OTP"}
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                <span className="">Two Factor Passkey</span>
-                <input
-                  onChange={(e) => setOtpfa(e.target.value)}
-                  value={otpfa}
-                  type="text"
-                  className="bg-[#26362C] rounded px-3 py-0.5"
-                />
-              </div>
-            )}
+            {user?.status_2fa === "enable" &&
+              (!checked ? (
+                <div className="flex flex-col">
+                  <span>One Time Password</span>
+                  <input
+                    onChange={(e) => setOtp(e.target.value)}
+                    value={otp}
+                    type="text"
+                    className="bg-[#26362C] rounded px-3 py-0.5"
+                  />
+                  <button
+                    onClick={handleOtp}
+                    disabled={sendingOtp || loading}
+                    className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+                  >
+                    {sendingOtp
+                      ? "Sending OTP..."
+                      : loading
+                      ? "Please Wait.."
+                      : "Send OTP"}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col">
+                  <span>Two Factor Passkey</span>
+                  <input
+                    onChange={(e) => setOtpfa(e.target.value)}
+                    value={otpfa}
+                    type="text"
+                    className="bg-[#26362C] rounded px-3 py-0.5"
+                  />
+                </div>
+              ))}
 
             <div className="flex gap-5 mt-5">
               <button

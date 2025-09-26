@@ -200,7 +200,7 @@ function Withdraw() {
             </div>
           )}
 
-          {!checked ? (
+          {user?.status_2fa === "enable" && (!checked ? (
             <div className="flex flex-col">
               <span className="">One Time Password</span>
               <input
@@ -231,7 +231,7 @@ function Withdraw() {
                 className="bg-[#26362C] rounded px-3 py-0.5"
               />
             </div>
-          )}
+          ))}
 
           <div className="flex gap-5 mt-5">
             <button

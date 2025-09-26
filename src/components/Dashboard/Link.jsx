@@ -13,7 +13,7 @@ function Link() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        `https://worldofsoftware.in/u2u_global_react/register/${user?.username}`
+        `https://u2uglobal.xyz/register/${user?.username}`
       );
       alert("Copied to clipboard!");
     } catch (err) {
@@ -21,7 +21,7 @@ function Link() {
     }
   };
 
-  const text = `https://worldofsoftware.in/u2u_global_react/register/${user?.username}`;
+  const text = `https://u2uglobal.xyz/register/${user?.username}`;
 
   const options = {
     chart: {
@@ -112,7 +112,7 @@ function Link() {
           <div className="text-white font-semibold">Invitation Link</div>
 
           <div className="text-sm text-white break-words">
-            https://worldofsoftware.in/u2u_global_react/register/
+            https://u2uglobal.xyz/register/
             {user?.username}
           </div>
 

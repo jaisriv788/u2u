@@ -17,13 +17,17 @@ function Signin() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    // console.log({
+    //   username: username,
+    //   password: password,
+    // });
     try {
       const response = await axios.post(`${baseUrl}login`, {
         username: username,
         password: password,
       });
 
-      // console.log(response.data);
+      // console.log(response);
       if (response.data.status == 200) {
         setMsg(response.data.msg);
         setUser(response.data.user);

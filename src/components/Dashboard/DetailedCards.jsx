@@ -15,42 +15,57 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
 
   const handleSubmit = async () => {
     setLoad(true);
-    await axios.post(
-      `${baseUrl}storeTransfer`,
-      {
-        user_id: user?.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+    try {
+      await axios.post(
+        `${baseUrl}storeTransfer`,
+        {
+          user_id: user?.id,
         },
-      }
-    );
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setLoad(false);
-    }, 500);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Transfer Successful!");
+    } catch (err) {
+      console.log(err);
+      alert("Transfer Failed!");
+    } finally {
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setLoad(false);
+      }, 500);
+    }
   };
 
   const handleClaimReward = async () => {
     setLoadTwo(true);
-    await axios.post(
-      `${baseUrl}dailyRoiSingleUser`,
-      {
-        user_id: user?.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+    try {
+      await axios.post(
+        `${baseUrl}dailyRoiSingleUser`,
+        {
+          user_id: user?.id,
         },
-      }
-    );
-    setTimeout(() => {
-      setIsModal2Open(false);
-      setLoadTwo(false);
-    }, 500);
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Claim Successful!");
+    } catch (err) {
+      console.log(err);
+      alert("Claim Failed!");
+    } finally {
+      setTimeout(() => {
+        setIsModal2Open(false);
+        setLoadTwo(false);
+      }, 500);
+    }
   };
 
   return (
@@ -76,13 +91,13 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
           <div className="flex-1 flex sm:hidden gap-3 justify-center items-center">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
+              className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] text-sm sm:text-base px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
             >
               Transfer ${balanceRoi}
             </button>
             <button
               onClick={() => setIsModal2Open(true)}
-              className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
+              className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3  py-1.5 text-sm sm:text-base rounded-full cursor-pointer transition ease-in-out duration-300"
             >
               Claim Daily Reward
             </button>

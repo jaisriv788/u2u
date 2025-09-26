@@ -8,7 +8,7 @@ RewriteCond %{REQUEST_URI} ^/landing-assets/
 RewriteRule .* - [L]
 
 # React assets (allow JS/CSS/images inside /app/assets/)
-RewriteCond %{REQUEST_URI} ^/u2u_global_react/app/assets/
+RewriteCond %{REQUEST_URI} ^/app/assets/
 RewriteRule .* - [L]
 
 # Everything else → React

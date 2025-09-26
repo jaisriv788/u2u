@@ -14,7 +14,7 @@ function Graph() {
   }
 
   const series = [dashboardData?.daily_profit, dashboardData?.pending_roi];
-  
+
   const options = {
     chart: {
       type: "donut",
@@ -140,7 +140,7 @@ function Graph() {
         <div className="flex items-center gap-2 border-b border-[#334038] pb-2 font-bold">
           <RiCoinFill className="text-gray-300" /> DELEGATOR REWARD 2.4x
         </div>
-        <div className="py-3 flex gap-3">
+        <div className="py-3 flex gap-3 sm:flex-row flex-col">
           <div className="text-sm flex flex-col gap-5">
             <div className="flex items-center gap-2">
               <IoIosSettings className="text-[#38C66C]" /> Delegator Amount - $
@@ -165,12 +165,13 @@ function Graph() {
           </div>
         </div>
       </div>
+
       <div className="rounded-lg bg-[#1F2C24] p-3">
         <div className="flex items-center gap-2 border-b border-[#334038] pb-2 font-bold">
           <RiCoinFill className="text-gray-300" />
           AFFILIATE REWARD 5.4x
         </div>
-        <div className="py-3 flex gap-3">
+        <div className="py-3 flex gap-3 sm:flex-row flex-col">
           <div className="text-sm flex flex-col gap-5">
             <div className="flex items-center gap-2">
               <IoIosSettings className="text-[#38C66C]" /> Delegator Amount - $
