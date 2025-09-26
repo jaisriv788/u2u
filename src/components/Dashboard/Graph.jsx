@@ -169,7 +169,7 @@ function Graph() {
       <div className="rounded-lg bg-[#1F2C24] p-3">
         <div className="flex items-center gap-2 border-b border-[#334038] pb-2 font-bold">
           <RiCoinFill className="text-gray-300" />
-          AFFILIATE REWARD 5.4x
+          AFFILIATE REWARD 4.5x
         </div>
         <div className="py-3 flex gap-3 sm:flex-row flex-col">
           <div className="text-sm flex flex-col gap-5">

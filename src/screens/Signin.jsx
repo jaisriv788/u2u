@@ -27,7 +27,7 @@ function Signin() {
         password: password,
       });
 
-      // console.log(response);
+      console.log({response});
       if (response.data.status == 200) {
         setMsg(response.data.msg);
         setUser(response.data.user);
@@ -46,6 +46,8 @@ function Signin() {
           setMsg("");
           setShowError(false);
         }, 1000);
+      } else {
+        console.log("Error", response);
       }
     } catch (err) {
       console.log(err);

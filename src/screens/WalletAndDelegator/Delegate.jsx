@@ -7,7 +7,8 @@ import useConstStore from "../../store/constStore";
 
 function Delegate() {
   const { user, token } = useUserStore();
-  const { baseUrl, setScreenLoading, setMsg, setShowError, setShowSuccess  } = useConstStore();
+  const { baseUrl, setScreenLoading, setMsg, setShowError, setShowSuccess } =
+    useConstStore();
 
   const [balance, setBalance] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -38,6 +39,18 @@ function Delegate() {
   }
 
   async function handleSubmit() {
+    if (userId == "" || amount == "" || password == "" || remark == "") {
+      showError("Feilds can not be empty!");
+      return;
+    }
+    // console.log({
+    //   user_id: user?.id,
+    //   username: !checked ? userId : user?.username,
+    //   pay_amount: amount,
+    //   password,
+    //   self: checked,
+    //   remark,
+    // });
     try {
       const response = await axios.post(
         `${baseUrl}investmentSave`,
@@ -56,6 +69,7 @@ function Delegate() {
           },
         }
       );
+      // console.log(response);
       if (response.data.status == 200) {
         setChecked(false);
         setUserId("");
@@ -66,9 +80,12 @@ function Delegate() {
         setPassword("");
         setRefreshed(!refreshed);
         showSuccess("Activation Successfull");
+      } else {
+        showError(response.data.msg);
       }
     } catch (err) {
-      showError(err);
+      console.log(err);
+      showError(err.response.data.msg);
     }
   }
 
