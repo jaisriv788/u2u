@@ -23,7 +23,17 @@ const useConstStore = create(
       }),
       {
         name: "const-storage",
-        getStorage: () => localStorage,
+        getStorage: () => sessionStorage,
+        version: 2,
+        migrate: (persistedState, version) => {
+          if (version < 2) {
+            return {
+              ...persistedState,
+              baseUrl: "https://u2uglobal.xyz/superadmin/api/",
+            };
+          }
+          return persistedState;
+        },
       }
     ),
     { name: "ConstStore" }

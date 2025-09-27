@@ -131,19 +131,19 @@ function Dashboard() {
 
             {/* Message */}
             <p className="text-gray-300 leading-relaxed mb-6">
-              Dear Delegator, We are currently upgrading our complete user
-              dashboard in{" "}
-              <span className="font-semibold text-emerald-400">
-                Node & React
+              <span className="font-semibold text-emerald-400 block mb-2">
+                Important Update – Please Clear Cache Before Login
               </span>
-              . The system will be fully live again within the next{" "}
-              <span className="font-semibold">3–4 hours</span>. Rest assured,
-              all your funds and data remain completely safe and secure. Your
-              trust is our top priority, and we are committed to delivering the
-              best possible experience.
+              <br />
+              Dear Delegator,
+              <br /> Kindly clear your browser cache and then log in to{" "}
+              <span className="font-semibold text-emerald-400">
+                u2uglobal.xyz
+              </span>
+              . Everything is working perfectly now.
               <br />
               <br />
-              Thank you for your patience and continued support.
+              Best regards,
               <span className="block mt-2 text-emerald-400 font-medium">
                 – Team Asia Validator
               </span>

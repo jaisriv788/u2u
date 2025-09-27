@@ -19,12 +19,10 @@ function Profile() {
   const [countries, setCountries] = useState(null);
   const [country, setCountry] = useState(user?.country || "");
   const [image, setImage] = useState(null);
-  const [receivedOtp, setReceivedOtp] = useState("");
   const [otp, setOtp] = useState("");
   const [otpfa, setOtpfa] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sendingOtp, setSendingOtp] = useState(false);
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
 
   function showError(msg) {
     setMsg(msg);
@@ -44,40 +42,33 @@ function Profile() {
     }, 1500);
   }
 
-  async function handleOtp() {
-    try {
-      setSendingOtp(true);
-      const response = await axios.post(
-        `${baseUrl}sendOtp`,
-        {
-          user_id: user?.id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data.data.otp);
+  // async function handleOtp() {
+  //   try {
+  //     setSendingOtp(true);
+  //     const response = await axios.post(
+  //       `${baseUrl}sendOtp`,
+  //       {
+  //         user_id: user?.id,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data.data.otp);
 
-      setReceivedOtp(response.data.data.otp);
-      showSuccess("OTP Sent To Your Mail.");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setSendingOtp(false);
-    }
-  }
+  //     setReceivedOtp(response.data.data.otp);
+  //     showSuccess("OTP Sent To Your Mail.");
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setSendingOtp(false);
+  //   }
+  // }
 
   async function handleSubmit() {
-    console.log(checked);
-    if (!checked) {
-      if (receivedOtp != otp) {
-        alert("OTP Do Not Match!");
-        return;
-      }
-    }
     try {
       setLoading(true);
       const formData = new FormData();
@@ -117,7 +108,6 @@ function Profile() {
           setOtp("");
           setOtpfa("");
           setImage(null);
-          setReceivedOtp("");
           setUser({
             ...res.data.data.user,
             delegator_amount: res.data.data.delegator_amount,
@@ -291,7 +281,7 @@ function Profile() {
               />
             </div>
 
-            {user.status_2fa == "disable" && (
+            {/* {user.status_2fa == "disable" && (
               <div className="flex flex-col">
                 <span className="">One Time Password</span>
                 <input
@@ -312,9 +302,9 @@ function Profile() {
                     : "Send OTP"}
                 </button>
               </div>
-            )}
+            )} */}
 
-            {user.status_2fa == "enable" && (
+            {/* {user.status_2fa == "enable" && (
               <div className="flex gap-2 items-center">
                 <input
                   id="check"
@@ -329,53 +319,27 @@ function Profile() {
                 />
                 <label>{!checked ? "OTP" : "Two Factor Authentication"}</label>
               </div>
-            )}
+            )} */}
 
-            {user?.status_2fa === "enable" &&
-              (!checked ? (
-                <div className="flex flex-col">
-                  <span>One Time Password</span>
-                  <input
-                    onChange={(e) => setOtp(e.target.value)}
-                    value={otp}
-                    type="text"
-                    className="bg-[#26362C] rounded px-3 py-0.5"
-                  />
-                  <button
-                    onClick={handleOtp}
-                    disabled={sendingOtp || loading}
-                    className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
-                  >
-                    {sendingOtp
-                      ? "Sending OTP..."
-                      : loading
-                      ? "Please Wait.."
-                      : "Send OTP"}
-                  </button>
-                </div>
-              ) : (
-                <div className="flex flex-col">
-                  <span>Two Factor Passkey</span>
-                  <input
-                    onChange={(e) => setOtpfa(e.target.value)}
-                    value={otpfa}
-                    type="text"
-                    className="bg-[#26362C] rounded px-3 py-0.5"
-                  />
-                </div>
-              ))}
+            {user?.status_2fa === "enable" && (
+              <div className="flex flex-col">
+                <span>Two Factor Passkey</span>
+                <input
+                  onChange={(e) => setOtpfa(e.target.value)}
+                  value={otpfa}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+              </div>
+            )}
 
             <div className="flex gap-5 mt-5">
               <button
                 onClick={handleSubmit}
-                disabled={loading || sendingOtp}
+                disabled={loading}
                 className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                {loading
-                  ? "Loading..."
-                  : sendingOtp
-                  ? "Please Wait.."
-                  : "Submit"}
+                {loading ? "Loading..." : "Submit"}
               </button>
               <button
                 onClick={() => {

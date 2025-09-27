@@ -15,6 +15,7 @@ function Signup() {
   const [countries, setCountries] = useState(null);
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -23,9 +24,18 @@ function Signup() {
   const [loading, setLoading] = useState(false);
   const [userFound, setUserFound] = useState(false);
 
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setMsg, setShowSuccess } = useConstStore();
 
   const navigate = useNavigate();
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -41,7 +51,9 @@ function Signup() {
     });
 
     if (res.data.status == 200) {
+      setName(res.data.data.first_name);
       setUserFound(true);
+      showSuccess("User Found!");
     } else {
       setUserFound(false);
     }
@@ -146,7 +158,7 @@ function Signup() {
               onChange={(e) => setReferralId(e.target.value)}
               className="border border-gray-300 py-2 px-3 rounded w-full glow-focus"
             />
-            {userFound && <span className="text-green-500">User Found</span>}
+            {userFound && <span className="text-green-500 italic">{name}</span>}
           </div>
 
           <input
