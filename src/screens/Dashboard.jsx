@@ -20,10 +20,12 @@ function Dashboard() {
   const { baseUrl, setScreenLoading } = useConstStore();
   const { dashboardData, setDashBoardData } = useDashboardStore();
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    setScreenLoading(true);
+    // setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {
         try {
@@ -42,6 +44,22 @@ function Dashboard() {
           // console.log("User data:", response.data);
           if (response.data.status == 200) {
             setDashBoardData(response.data.data);
+            const res = await axios.get(`${baseUrl}generalSetting`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            console.log({ res: res.data });
+            if (res.data.status == 200) {
+              console.log("got the message");
+              if (res.data.data.popup_status == 1) {
+                console.log(res.data.data.popup_message.split("\n"));
+                setShowModal(true);
+                setTitle(res.data.data.popup_title);
+                setMsg(res.data.data.popup_message.split("\n"));
+              }
+            }
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -121,42 +139,40 @@ function Dashboard() {
   return (
     <div className="flex-1 p-4 flex flex-col gap-3 max-w-screen">
       {showModal && (
-        <div className="fixed z-30 bg-black/70 inset-0 pt-10">
-          <div className="max-w-lg mx-auto bg-gradient-to-br from-[#0D1B2A] to-[#09182C] text-gray-200 shadow-xl rounded-2xl p-6 border border-gray-700">
+        <div className="fixed z-30 bg-black/70 inset-0 pt-2">
+          <div className="w-full max-w-md sm:max-w-lg mx-auto bg-gradient-to-br from-[#0D1B2A] to-[#09182C] text-gray-200 shadow-xl rounded-2xl p-5 sm:p-6 border border-gray-700">
             {/* Heading */}
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-8 bg-emerald-500 rounded-full"></div>
-              <h2 className="text-2xl font-semibold text-white">Notice</h2>
+              <div className="w-2 h-7 bg-emerald-500 rounded-full"></div>
+              <h2 className="text-lg sm:text-xl font-semibold text-white">
+                Notice
+              </h2>
             </div>
 
             {/* Message */}
-            <p className="text-gray-300 leading-relaxed mb-6">
+            <div className="text-gray-300 leading-relaxed mb-5 text-sm sm:text-base">
               <span className="font-semibold text-emerald-400 block mb-2">
-                Important Update – Please Clear Cache Before Login
+                Important Update – {title}
               </span>
-              <br />
-              Dear Delegator,
-              <br /> Kindly clear your browser cache and then log in to{" "}
-              <span className="font-semibold text-emerald-400">
-                u2uglobal.xyz
-              </span>
-              . Everything is working perfectly now.
-              <br />
-              <br />
-              Best regards,
-              <span className="block mt-2 text-emerald-400 font-medium">
-                – Team Asia Validator
-              </span>
-            </p>
+
+              <p className="mb-3">{msg[0]}</p>
+              <p className="mb-3">{msg.slice(1, msg.length - 1)}</p>
+              <p className="mb-3">
+                <span>{msg[msg.length - 1].split("–")[0]}</span> <br /> -
+                <span className="text-green-500">
+                  {msg[msg.length - 1].split("–")[1]}
+                </span>
+              </p>
+            </div>
 
             {/* Button */}
             <div className="flex justify-end">
-              <div
+              <button
                 onClick={() => setShowModal(false)}
-                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-lg shadow-md cursor-pointer transition"
+                className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-sm font-medium rounded-lg shadow-md cursor-pointer transition"
               >
                 Okay
-              </div>
+              </button>
             </div>
           </div>
         </div>

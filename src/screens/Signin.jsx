@@ -10,7 +10,8 @@ function Signin() {
   const location = useLocation();
   const userDetails = location.state?.details;
 
-  const { baseUrl, setMsg, setShowSuccess, setShowError } = useConstStore();
+  const { baseUrl, setMsg, setShowSuccess, setShowError, setScreenLoading } =
+    useConstStore();
   const { setUser, setIsConnected, setToken } = useUserStore();
 
   const navigate = useNavigate();
@@ -22,21 +23,22 @@ function Signin() {
     //   password: password,
     // });
     try {
-      console.log(`${baseUrl}login`);
-      console.log({
-        username: username,
-        password: password,
-      });
+      // console.log(`${baseUrl}login`);
+      // console.log({
+      //   username: username,
+      //   password: password,
+      // });
       const response = await axios.post(`${baseUrl}login`, {
         username: username,
         password: password,
       });
 
-      console.log({ response });
+      // console.log({ response });
       if (response.data.status == 200) {
         setMsg(response.data.msg);
         setUser(response.data.user);
         setShowSuccess(true);
+        setScreenLoading(true);
         setTimeout(() => {
           setMsg("");
           setShowSuccess(false);
