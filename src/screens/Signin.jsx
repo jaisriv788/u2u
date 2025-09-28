@@ -7,6 +7,7 @@ import axios from "axios";
 function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const userDetails = location.state?.details;
 
@@ -18,6 +19,7 @@ function Signin() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     // console.log({
     //   username: username,
     //   password: password,
@@ -58,6 +60,8 @@ function Signin() {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -97,9 +101,10 @@ function Signin() {
           />
           <button
             type="submit"
+            disabled={loading}
             className="text-white bg-[#38C66C] font-semibold py-2 rounded cursor-pointer border border-black hover:border-amber-400 transition ease-in-out duration-300"
           >
-            LOGIN
+            {loading ? "Logging In..." : "LOGIN"}
           </button>
         </form>
         <div className="mt-5 text-sm text-purple-800">

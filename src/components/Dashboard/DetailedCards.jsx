@@ -10,13 +10,31 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
   const [isModal2Open, setIsModal2Open] = useState(false);
   const [load, setLoad] = useState(false);
   const [loadTow, setLoadTwo] = useState(false);
-  const { baseUrl } = useConstStore();
+  const { baseUrl, setMsg, setShowError, setShowSuccess } = useConstStore();
   const { user, token } = useUserStore();
+
+  function showError(msg) {
+    setMsg(msg);
+    setShowError(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowError(false);
+    }, 1500);
+  }
+
+  function showSuccess(msg) {
+    setMsg(msg);
+    setShowSuccess(true);
+    setTimeout(() => {
+      setMsg("");
+      setShowSuccess(false);
+    }, 1500);
+  }
 
   const handleSubmit = async () => {
     setLoad(true);
     try {
-      await axios.post(
+      const response = await axios.post(
         `${baseUrl}storeTransfer`,
         {
           user_id: user?.id,
@@ -28,7 +46,12 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
           },
         }
       );
-      alert("Transfer Successful!");
+      // console.log(response.data);
+      if (response.data.status == 200) {
+        showSuccess("Transfer Successful!");
+      } else {
+        showError(response.data.msg);
+      }
     } catch (err) {
       console.log(err);
       alert("Transfer Failed!");
@@ -43,7 +66,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
   const handleClaimReward = async () => {
     setLoadTwo(true);
     try {
-      await axios.post(
+      const response = await axios.post(
         `${baseUrl}dailyRoiSingleUser`,
         {
           user_id: user?.id,
@@ -56,7 +79,11 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
         }
       );
 
-      alert("Claim Successful!");
+      if (response.data.status == 200) {
+        showSuccess("Claim Successful!");
+      } else {
+        showError(response.data.msg);
+      }
     } catch (err) {
       console.log(err);
       alert("Claim Failed!");
@@ -149,7 +176,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
                 disabled={load}
                 className="px-5 py-2 cursor-pointer bg-gradient-to-r from-[#00D8FA] to-[#00FFA5] text-black font-semibold rounded-lg hover:from-[#00FFA5] hover:to-[#00D8FA] transition"
               >
-                {load ? "Transfering" : "Proceed"}
+                {load ? "Transfering..." : "Proceed"}
               </button>
             </div>
           </div>

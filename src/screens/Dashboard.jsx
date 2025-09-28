@@ -25,40 +25,39 @@ function Dashboard() {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    // setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {
         try {
-          const response = await axios.post(
-            `${baseUrl}dashboard`,
-            {
-              user_id: user?.id,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          // console.log("User data:", response.data);
-          if (response.data.status == 200) {
-            setDashBoardData(response.data.data);
-            const res = await axios.get(`${baseUrl}generalSetting`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            console.log({ res: res.data });
-            if (res.data.status == 200) {
-              console.log("got the message");
-              if (res.data.data.popup_status == 1) {
-                console.log(res.data.data.popup_message.split("\n"));
-                setShowModal(true);
-                setTitle(res.data.data.popup_title);
-                setMsg(res.data.data.popup_message.split("\n"));
+          const [dashboardRes, generalRes] = await Promise.all([
+            axios.post(
+              `${baseUrl}dashboard`,
+              { user_id: user?.id },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
               }
+            ),
+            axios.get(`${baseUrl}generalSetting`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }),
+          ]);
+
+          // Handle dashboard response
+          if (dashboardRes.data.status === 200) {
+            setDashBoardData(dashboardRes.data.data);
+          }
+
+          // Handle general settings response
+          if (generalRes.data.status === 200) {
+            if (generalRes.data.data.popup_status === 1) {
+              setShowModal(true);
+              setTitle(generalRes.data.data.popup_title);
+              setMsg(generalRes.data.data.popup_message.split("\n"));
             }
           }
         } catch (error) {
@@ -68,6 +67,7 @@ function Dashboard() {
         }
       }
     };
+
     fetchUserData();
   }, [user, isConnected]);
 
