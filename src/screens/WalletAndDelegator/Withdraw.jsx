@@ -18,6 +18,9 @@ function Withdraw() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [disableSubmit, setDisableSubmit] = useState(false);
+  // const [receivedOtp, setReceivedOtp] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [disableOtp, setDisableOtp] = useState("");
 
   function showError(msg) {
     setMsg(msg);
@@ -38,6 +41,15 @@ function Withdraw() {
   }
 
   async function handleSubmit() {
+    if (otp == "") {
+      showError("Otp Feild Is Empty.");
+      return;
+    }
+    // if (!checked && otp != receivedOtp) {
+    //   showError("Otp Did Not Match.");
+    //   return;
+    // }
+
     try {
       setDisableSubmit(true);
       const response = await axios.post(
@@ -70,31 +82,31 @@ function Withdraw() {
     }
   }
 
-  // async function handleOtp() {
-  //   setDisableOtp(true);
-  //   try {
-  //     const response = await axios.post(
-  //       `${baseUrl}sendOtp`,
-  //       {
-  //         user_id: user?.id,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response.data.data.otp);
-  //     showSuccess(`Otp sent to your registered email: ${user?.email}`);
+  async function handleOtp() {
+    setDisableOtp(true);
+    try {
+      const response = await axios.post(
+        `${baseUrl}sendOtp`,
+        {
+          user_id: user?.id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      showSuccess(`Otp sent to your email.`);
 
-  //     setReceivedOtp(response.data.data.otp);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setDisableOtp(false);
-  //   }
-  // }
+      // setReceivedOtp(response.data.data.otp);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDisableOtp(false);
+    }
+  }
 
   return (
     <div className="flex-1 flex justify-center p-4">
@@ -151,7 +163,7 @@ function Withdraw() {
             />
           </div>
 
-          {/* {user.status_2fa == "disable" && (
+          {user.status_2fa == "disable" && (
             <div className="flex flex-col">
               <span className="">One Time Password</span>
               <input
@@ -172,8 +184,8 @@ function Withdraw() {
                   : "Send Otp"}
               </button>
             </div>
-          )} */}
-          {/* 
+          )}
+
           {user.status_2fa == "enable" && (
             <div className="flex gap-2 items-center">
               <input
@@ -188,19 +200,41 @@ function Withdraw() {
               />
               <label>{!checked ? "OTP" : "Two Factor Authentication"}</label>
             </div>
-          )} */}
-
-          {user?.status_2fa === "enable" && (
-            <div className="flex flex-col">
-              <span className="">Two Factor Authentication Passkey</span>
-              <input
-                onChange={(e) => setOtp(e.target.value)}
-                value={otp}
-                type="text"
-                className="bg-[#26362C] rounded px-3 py-0.5"
-              />
-            </div>
           )}
+
+          {user?.status_2fa === "enable" &&
+            (!checked ? (
+              <div className="flex flex-col">
+                <span className="">One Time Password</span>
+                <input
+                  onChange={(e) => setOtp(e.target.value)}
+                  value={otp}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+                <button
+                  onClick={handleOtp}
+                  disabled={disableOtp || disableSubmit}
+                  className="bg-[#22b357] disabled:cursor-not-allowed hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+                >
+                  {disableOtp
+                    ? "Sending OTP..."
+                    : disableSubmit
+                    ? "Please Wait..."
+                    : "Send Otp"}
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col">
+                <span className="">Two Factor Authentication Passkey</span>
+                <input
+                  onChange={(e) => setOtp(e.target.value)}
+                  value={otp}
+                  type="text"
+                  className="bg-[#26362C] rounded px-3 py-0.5"
+                />
+              </div>
+            ))}
 
           <div className="flex gap-5 mt-5">
             <button
