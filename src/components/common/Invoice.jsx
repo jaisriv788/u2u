@@ -35,7 +35,7 @@ function Invoice() {
                 To:
                 <span className="text-blue-600 ml-1">{user.first_name}</span>
               </div>
-              <div className="mb-1">{invoice.activated_by_name}</div>
+              <div className="mb-1">{invoice.user_username}</div>
               <div>{user.phone_no}</div>
             </div>
             <div className="text-right">

@@ -19,6 +19,7 @@ function Delegate() {
   const [remark, setRemark] = useState("");
   const [password, setPassword] = useState("");
   const [refreshed, setRefreshed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function showError(msg) {
     setMsg(msg);
@@ -39,8 +40,12 @@ function Delegate() {
   }
 
   async function handleSubmit() {
-    if (userId == "" || amount == "" || password == "" || remark == "") {
+    if (amount == "" || password == "" || remark == "") {
       showError("Feilds can not be empty!");
+      return;
+    }
+    if (!checked && userId == "") {
+      showError("UserId Feilds can not be empty!");
       return;
     }
     // console.log({
@@ -52,6 +57,7 @@ function Delegate() {
     //   remark,
     // });
     try {
+      setLoading(true);
       const response = await axios.post(
         `${baseUrl}investmentSave`,
         {
@@ -86,6 +92,8 @@ function Delegate() {
     } catch (err) {
       console.log(err);
       showError(err.response.data.msg);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -240,11 +248,15 @@ function Delegate() {
             <div className="flex gap-5 mt-5">
               <button
                 onClick={handleSubmit}
+                disabled={loading}
                 className="bg-[#22b357] hover:bg-[#56CF82] transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
               >
-                Submit
+                {loading ? "Activating..." : "Submit"}
               </button>
-              <button className="bg-gray-500 hover:bg-gray-400 transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3">
+              <button
+                disabled={loading}
+                className="bg-gray-500 hover:bg-gray-400 transition ease-in-out duration-300 cursor-pointer px-3 py-0.5 rounded w-fit mt-3"
+              >
                 Cancel
               </button>
             </div>

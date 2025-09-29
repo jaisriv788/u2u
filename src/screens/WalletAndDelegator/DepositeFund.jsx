@@ -159,6 +159,12 @@ function DepositeFund() {
       showError("Amount Can Not Be Zero.");
       return;
     }
+
+    if (amount < 1) {
+      showError("Amount Can Not Be Less Than 1.");
+      return;
+    }
+
     if (!window.ethereum) {
       showError("Please install MetaMask!");
       return;
@@ -199,9 +205,9 @@ function DepositeFund() {
           },
         }
       );
-      
+
       console.log(response);
-      
+
       console.log("API updated successfully");
       showSuccess("Transaction confirmed ✅");
     } catch (err) {
@@ -216,7 +222,7 @@ function DepositeFund() {
     <div className="flex-1 flex justify-center p-4">
       <div className="bg-[#1F2C24] mt-5 rounded-lg w-full sm:w-10/12 md:w-9/12 h-fit">
         <div className="text-lg font-semibold border-b py-3 px-5 border-[#35443b]">
-          Deposite{" "}
+          Deposit{" "}
         </div>
         <div className="py-5 px-5 flex flex-col gap-3 text-sm">
           <div className="flex flex-col relative">

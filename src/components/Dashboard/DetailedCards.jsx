@@ -4,6 +4,7 @@ import { FaCaretUp } from "react-icons/fa";
 import axios from "axios";
 import useConstStore from "../../store/constStore";
 import useUserStore from "../../store/userStore";
+import useDashboardStore from "../../store/dashboardStore";
 
 function DetailedCards({ amount, title, children, show, balanceRoi }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +13,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
   const [loadTow, setLoadTwo] = useState(false);
   const { baseUrl, setMsg, setShowError, setShowSuccess } = useConstStore();
   const { user, token } = useUserStore();
+  const { dashboardData } = useDashboardStore();
 
   function showError(msg) {
     setMsg(msg);
@@ -124,9 +126,12 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
             </button>
             <button
               onClick={() => setIsModal2Open(true)}
+              disabled={dashboardData?.today_claim_status == "claimed"}
               className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3  py-1.5 text-sm sm:text-base rounded-full cursor-pointer transition ease-in-out duration-300"
             >
-              Claim Daily Reward
+              {dashboardData?.today_claim_status == "claimed"
+                ? "Already Claimed"
+                : "Claim Daily Reward"}
             </button>
           </div>
         )}
@@ -142,9 +147,12 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
           </button>
           <button
             onClick={() => setIsModal2Open(true)}
+            disabled={dashboardData?.today_claim_status == "claimed"}
             className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
           >
-            Claim Daily Reward
+            {dashboardData?.today_claim_status == "claimed"
+              ? "Already Claimed"
+              : "Claim Daily Reward"}
           </button>
         </div>
       )}
