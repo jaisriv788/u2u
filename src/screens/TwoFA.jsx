@@ -21,7 +21,7 @@ function TwoFA() {
     setTimeout(() => {
       setMsg("");
       setShowError(false);
-    }, 1500);
+    }, 7000);
   }
 
   function showSuccess(msg) {
@@ -30,7 +30,7 @@ function TwoFA() {
     setTimeout(() => {
       setMsg("");
       setShowSuccess(false);
-    }, 1500);
+    }, 7000);
   }
 
   useEffect(() => {

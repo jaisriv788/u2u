@@ -32,7 +32,7 @@ function DepositeFund() {
     setTimeout(() => {
       setMsg("");
       setShowError(false);
-    }, 1500);
+    }, 7000);
   }
 
   function showSuccess(msg) {
@@ -41,7 +41,7 @@ function DepositeFund() {
     setTimeout(() => {
       setMsg("");
       setShowSuccess(false);
-    }, 1500);
+    }, 7000);
   }
 
   useEffect(() => {
@@ -184,7 +184,7 @@ function DepositeFund() {
 
       console.log("Deposit confirmed ✅", receipt);
 
-      await axios.post(
+      const response = await axios.post(
         `${baseUrl}depositUsdtFund`,
         {
           user_id: user?.id,
@@ -199,7 +199,9 @@ function DepositeFund() {
           },
         }
       );
-
+      
+      console.log(response);
+      
       console.log("API updated successfully");
       showSuccess("Transaction confirmed ✅");
     } catch (err) {

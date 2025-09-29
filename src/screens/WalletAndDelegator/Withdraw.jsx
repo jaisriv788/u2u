@@ -25,7 +25,7 @@ function Withdraw() {
     setTimeout(() => {
       setMsg("");
       setShowError(false);
-    }, 1500);
+    }, 7000);
   }
 
   function showSuccess(msg) {
@@ -34,7 +34,7 @@ function Withdraw() {
     setTimeout(() => {
       setMsg("");
       setShowSuccess(false);
-    }, 1500);
+    }, 7000);
   }
 
   async function handleSubmit() {
@@ -57,14 +57,14 @@ function Withdraw() {
       );
       if (response.data.status == 200) {
         showSuccess("Withdraw Request Sent.");
-        navigate("/dashboard");
+        navigate("/withdrawreport");
       } else {
         showError(response.data.msg);
       }
       console.log(response.data);
     } catch (error) {
-      console.log(error);
-      showError("Something Went Wrong While Sending The Request.");
+      console.log(error.response.data.msg);
+      showError(error.response.data.msg);
     } finally {
       setDisableSubmit(false);
     }

@@ -30,7 +30,7 @@ function Profile() {
     setTimeout(() => {
       setMsg("");
       setShowError(false);
-    }, 1500);
+    }, 7000);
   }
 
   function showSuccess(msg) {
@@ -39,7 +39,7 @@ function Profile() {
     setTimeout(() => {
       setMsg("");
       setShowSuccess(false);
-    }, 1500);
+    }, 7000);
   }
 
   // async function handleOtp() {

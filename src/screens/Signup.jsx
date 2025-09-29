@@ -34,7 +34,7 @@ function Signup() {
     setTimeout(() => {
       setMsg("");
       setShowSuccess(false);
-    }, 1500);
+    }, 7000);
   }
 
   useEffect(() => {

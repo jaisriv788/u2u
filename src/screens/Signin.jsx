@@ -45,7 +45,7 @@ function Signin() {
           setMsg("");
           setShowSuccess(false);
           navigate("/dashboard");
-        }, 1000);
+        }, 7000);
         setIsConnected(true);
         setToken(response.data.token);
       } else if (response.data.status == 201) {
@@ -54,7 +54,7 @@ function Signin() {
         setTimeout(() => {
           setMsg("");
           setShowError(false);
-        }, 1000);
+        }, 7000);
       } else {
         console.log("Error", response);
       }
