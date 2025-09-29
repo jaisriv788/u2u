@@ -25,6 +25,7 @@ function Dashboard() {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
+    setScreenLoading(true);
     const fetchUserData = async () => {
       if (user && isConnected) {
         try {

@@ -83,6 +83,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
 
       if (response.data.status == 200) {
         showSuccess("Claim Successful!");
+        window.location.reload();
       } else {
         showError(response.data.msg);
       }
