@@ -75,20 +75,27 @@ function Dashboard() {
     {
       title: "WITHDRAW BALANCE",
       balance: dashboardData?.user_wallet?.balance.toFixed(4),
-
       icon: FaWallet,
+      show: true,
     },
     {
       title: "DEPOSIT BALANCE",
       balance: dashboardData?.user_wallet?.deposit_balance.toFixed(4),
       icon: FaWallet,
+      show: true,
     },
     {
       title: "DIRECT TEAM",
       balance: dashboardData?.total_direct,
       icon: FaWallet,
+      show: false,
     },
-    { title: "LEVEL TEAM", balance: dashboardData?.all_team, icon: FaWallet },
+    {
+      title: "LEVEL TEAM",
+      balance: dashboardData?.all_team,
+      icon: FaWallet,
+      show: false,
+    },
   ];
 
   const Data2 = [
@@ -186,6 +193,7 @@ function Dashboard() {
             icon={item.icon}
             title={item.title}
             balance={item.balance}
+            show={item.show}
           />
         ))}
       </div>
