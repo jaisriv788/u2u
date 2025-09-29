@@ -160,7 +160,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-40">
           <div className="bg-[#0F0F1D] rounded-2xl p-6 w-96 flex flex-col gap-6 shadow-xl border border-[#1A1A2E]">
             <h2 className="text-xl font-bold text-white text-center">
               Confirm Transfer
@@ -192,7 +192,7 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
         </div>
       )}
       {isModal2Open && (
-        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-40">
           <div className="bg-[#0F0F1D] rounded-2xl p-6 w-96 flex flex-col gap-6 shadow-xl border border-[#1A1A2E]">
             <h2 className="text-xl font-bold text-white text-center">
               Confirm
