@@ -50,6 +50,12 @@ function Withdraw() {
     //   return;
     // }
 
+    console.log({
+      user_id: user?.id,
+      amount,
+      transaction_password: currentPassword,
+      otp,
+    });
     try {
       setDisableSubmit(true);
       const response = await axios.post(
@@ -75,7 +81,7 @@ function Withdraw() {
       }
       console.log(response.data);
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.error(error.response);
       showError(error.response.data.msg);
     } finally {
       setDisableSubmit(false);
