@@ -118,7 +118,7 @@ export const sidebarLinkData = [
       },
       {
         id: 64,
-        title: "Deposite Report",
+        title: "Deposit Report",
         icon: GoDotFill,
         path: "/depositerport",
       },

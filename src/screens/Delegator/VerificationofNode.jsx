@@ -15,6 +15,7 @@ function PromoPackHistory() {
   const [searchValue, setSearchValue] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [verifyingIndex, setVerifyingIndex] = useState(null);
 
   const [showModel, setShowModel] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -257,6 +258,8 @@ function PromoPackHistory() {
       showSuccess("Transaction Complete!");
     } catch (e) {
       console.log(e);
+    } finally {
+      setVerifyingIndex(null);
     }
   }
 
@@ -279,7 +282,10 @@ function PromoPackHistory() {
               </button>
               <button
                 className="bg-gray-400  cursor-pointer px-4 py-2 rounded hover:bg-gray-500"
-                onClick={() => setShowModel(false)}
+                onClick={() => {
+                  setShowModel(false);
+                  setVerifyingIndex(null);
+                }}
               >
                 Cancel
               </button>
@@ -385,19 +391,23 @@ function PromoPackHistory() {
                       <td className="text-nowrap">{item.package_name}</td>
                       <td className="text-nowrap">
                         {item.verification_status == "completed" ? (
-                          <span className="bg-emerald-400 flex gap-1 items-center rounded px-2 py-1">
+                          <span className="bg-emerald-400 flex gap-1 items-center justify-center rounded px-2 py-1 w-25 ">
                             <TiTick /> Verified
                           </span>
                         ) : (
-                          <span
+                          <button
                             onClick={() => {
                               setSelectedItem(item);
+                              setVerifyingIndex(startIdx + index);
                               setShowModel(true);
                             }}
-                            className="rounded px-6 cursor-pointer hover:bg-gray-500 transition ease-in-out duration-300 py-1 bg-gray-400"
+                            disabled={verifyingIndex === startIdx + index}
+                            className="rounded px-6 text-center cursor-pointer hover:bg-gray-500  w-25 transition ease-in-out duration-300 py-1 bg-gray-400"
                           >
-                            Verify
-                          </span>
+                            {verifyingIndex === startIdx + index
+                              ? "Wait..."
+                              : "Verify"}
+                          </button>
                         )}
                       </td>
                     </tr>

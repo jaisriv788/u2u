@@ -141,14 +141,14 @@ function DetailedCards({ amount, title, children, show, balanceRoi }) {
         <div className="flex-1 hidden sm:flex flex-col gap-3 justify-center items-center">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
+            className="bg-gradient-to-r w-3/4 md:w-1/2 lg:w-full font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
           >
             Transfer ${balanceRoi}
           </button>
           <button
             onClick={() => setIsModal2Open(true)}
             disabled={dashboardData?.today_claim_status == "claimed"}
-            className="bg-gradient-to-r font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
+            className="bg-gradient-to-r w-3/4 md:w-1/2 lg:w-full font-semibold hover:text-black from-[#00D8FA] to-[#00FFA5] hover:from-[#00FFA5] hover:to-[#00D8FA] px-3 py-1.5 rounded-full cursor-pointer transition ease-in-out duration-300"
           >
             {dashboardData?.today_claim_status == "claimed"
               ? "Already Claimed"
