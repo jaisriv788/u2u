@@ -226,7 +226,7 @@ function TeamNetwork() {
                         : "-"}
                     </td>
                     <td>
-                      {item.activated_at
+                      {item.activated_at != "-"
                         ? new Date(item.activated_at).toLocaleString("en-GB", {
                             hour12: false,
                           })
